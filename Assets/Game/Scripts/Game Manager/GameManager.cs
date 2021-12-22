@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour
 {
 
     public static GameManager inst;
-    public RunnerGameConfig gameConfig;
+    //public RunnerGameConfig gameConfig;
     //public Transform startPos;
 
     [Header("UI Reference")]
@@ -62,10 +62,6 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-
-        //startPosition.position = inst.transform.Find("Player").transform.position;
-
-
         restartGame();
     }
 
@@ -81,7 +77,7 @@ public class GameManager : MonoBehaviour
             clearText(colorChangeInstructions);
 
 
-            inst.gameConfig.cameraSpeed = 0;
+            //GameConfig.cameraSpeed = 0;
 
             if (isObstacle)
             {
@@ -133,7 +129,8 @@ public class GameManager : MonoBehaviour
     {
         if (_level == 0)
         {
-            inst.gameConfig.cameraSpeed = 0;
+            //GameConfig.cameraSpeed = 0;
+
             obstacleWrongColorKill.text = "You Won!";
             clearText(jumpInstructions);
             clearText(colorChangeInstructions);
@@ -149,17 +146,20 @@ public class GameManager : MonoBehaviour
 
     private void restartGame()
     {
+        GameObject player = GameObject.Find("Player");
+        GameObject levelStart = GameObject.Find("PlayerSpawn");
 
-        
+        player.transform.position = levelStart.transform.position;
+        GlobalVar.isDead = false;
 
-        
-        inst.transform.position = new Vector3(0,0,0);
-        inst.transform.Find("Player").transform.position = inst.transform.position +new Vector3(-30,5,0);
+        //inst.transform.Find("Player").transform.position = inst.transform.position + new Vector3(-30,5,0);
+
+        //GameConfig.cameraSpeed = 5;
+
         clearText(obstacleWrongColorKill);
         clearText(restartText);
         jumpInstructions.text = "Press Space to Jump";
         colorChangeInstructions.text = "Press Shift to Change Color";
-        inst.gameConfig.cameraSpeed = 5;
 
         //curretn color = 0
         //make player white 
