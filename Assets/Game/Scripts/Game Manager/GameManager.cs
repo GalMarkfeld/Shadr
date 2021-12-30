@@ -14,8 +14,7 @@ public class GameManager : MonoBehaviour
 
     [Header("UI Reference")]
     public Text obstacleWrongColorKill;
-    public Text jumpInstructions;
-    public Text colorChangeInstructions;
+    public Text Notice;
     public Text restartText;
 
     //public Text scoreText;
@@ -73,8 +72,8 @@ public class GameManager : MonoBehaviour
         if (_level == 0)
         {
 
-            clearText(jumpInstructions);
-            clearText(colorChangeInstructions);
+            clearText(Notice);
+          
 
 
             //GameConfig.cameraSpeed = 0;
@@ -82,11 +81,11 @@ public class GameManager : MonoBehaviour
             if (isObstacle)
             {
                 
-                obstacleWrongColorKill.text = "switch to the same color next time!";
+                obstacleWrongColorKill.text = "SWITCH TO THE SAME COLOR!";
                 
             
             }
-            restartText.text = "Press Enter to Restart";
+            restartText.text = "PRESS ENTER TO RESTART!";
 
 
 
@@ -132,8 +131,8 @@ public class GameManager : MonoBehaviour
             //GameConfig.cameraSpeed = 0;
 
             obstacleWrongColorKill.text = "You Won!";
-            clearText(jumpInstructions);
-            clearText(colorChangeInstructions);
+            clearText(Notice);
+            
         }
     }
 
@@ -158,8 +157,7 @@ public class GameManager : MonoBehaviour
 
         clearText(obstacleWrongColorKill);
         clearText(restartText);
-        jumpInstructions.text = "Press Space to Jump";
-        colorChangeInstructions.text = "Press Shift to Change Color";
+        
 
         //curretn color = 0
         //make player white 

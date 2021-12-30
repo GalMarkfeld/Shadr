@@ -2,10 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
-
+    //Gal edit: Presesnt current notice for user in tutorial level
+    public Text Notice;
 
     private Rigidbody2D _rb;
     private BoxCollider2D _bc;
@@ -169,6 +171,24 @@ public class PlayerController : MonoBehaviour
         {
             OnLevelWin?.Invoke();
             GlobalVar.isDead = true;
+        } 
+        //Gal edit: change notice message accordingly
+        else if(collision.gameObject.tag== "Shift Notice")
+        {
+            Notice.text = "PRESS SHIFT!";
+        }
+        else if (collision.gameObject.tag == "Jump Notice")
+        {
+            Notice.text = "PRESS SPACE!";
+        }
+        else if (collision.gameObject.tag == "Double Shift Notice")
+        {
+            Notice.text = "PRESS SHIFT MULTIPLE TIMES!";
+        }
+        else if (collision.gameObject.tag == "Combination Notice")
+        {
+            Notice.text = "TRY BOTH OPTIONS!";
+           
         }
     }
 

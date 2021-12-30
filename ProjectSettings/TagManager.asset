@@ -9,6 +9,10 @@ TagManager:
   - obstacle
   - Floor
   - End
+  - Shift Notice
+  - Jump Notice
+  - Combination Notice
+  - Double Shift Notice
   layers:
   - Default
   - TransparentFX
