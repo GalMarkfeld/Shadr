@@ -77,7 +77,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -125,6 +125,10 @@ MonoBehaviour:
   points:
   - {fileID: 397254515987409645}
   - {fileID: 6939430524669737308}
+  switchOn: 0
+  changeSpeed: 0.3
+  renderer: {fileID: 4100582506379386838}
+  StartColor: 0
 --- !u!61 &2814156164737062906
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -223,7 +227,7 @@ GameObject:
   m_Component:
   - component: {fileID: 702985655357238099}
   m_Layer: 0
-  m_Name: MovingPlatform
+  m_Name: BasicMovingPlatform
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
