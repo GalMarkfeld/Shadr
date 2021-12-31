@@ -14,7 +14,11 @@ public class GameManager : MonoBehaviour
 
     [Header("UI Reference")]
     public Text obstacleWrongColorKill;
+
+    //Gal edit: made instructions into 1 text that changes
     public Text Notice;
+
+
     public Text restartText;
 
     //public Text scoreText;
@@ -57,6 +61,32 @@ public class GameManager : MonoBehaviour
         PlayerController.OnLevelKill += killPlayer;
         PlayerController.OnLevelWin += playerWon;
         InputManager.OnRestart += restartGame;
+
+        //Gal edit
+        PlayerController.NoticeUser += setNotice;
+    }
+
+    //Gal edit
+    private void setNotice(String tag)
+    {
+        
+        if (tag== "Shift Notice")
+        {
+            Notice.text = "PRESS SHIFT!";
+        }
+        else if (tag == "Jump Notice")
+        {
+            Notice.text = "PRESS SPACE!";
+        }
+        else if (tag == "Double Shift Notice")
+        {
+            Notice.text = "PRESS SHIFT MULTIPLE TIMES!";
+        }
+        else if (tag == "Combination Notice")
+        {
+            Notice.text = "TRY BOTH OPTIONS!";
+
+        } 
     }
 
     private void Start()

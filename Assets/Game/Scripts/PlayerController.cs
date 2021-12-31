@@ -6,9 +6,7 @@ using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
-    //Gal edit: Presesnt current notice for user in tutorial level
-    public Text Notice;
-
+    
     private Rigidbody2D _rb;
     private BoxCollider2D _bc;
     private Animator _anim;
@@ -34,6 +32,10 @@ public class PlayerController : MonoBehaviour
     // Subscribing to functions
     public static Action<bool> OnLevelKill = delegate { };
     public static Action OnLevelWin = delegate { };
+
+    //Gal edit
+    public static Action<String> NoticeUser = delegate { };
+
 
     private void Awake()
     {
@@ -172,23 +174,10 @@ public class PlayerController : MonoBehaviour
             OnLevelWin?.Invoke();
             GlobalVar.isDead = true;
         } 
-        //Gal edit: change notice message accordingly
-        else if(collision.gameObject.tag== "Shift Notice")
+        //Gal edit: invoke event with proper trigger tag                
+        else if (collision.gameObject.tag.Contains("Notice"))
         {
-            Notice.text = "PRESS SHIFT!";
-        }
-        else if (collision.gameObject.tag == "Jump Notice")
-        {
-            Notice.text = "PRESS SPACE!";
-        }
-        else if (collision.gameObject.tag == "Double Shift Notice")
-        {
-            Notice.text = "PRESS SHIFT MULTIPLE TIMES!";
-        }
-        else if (collision.gameObject.tag == "Combination Notice")
-        {
-            Notice.text = "TRY BOTH OPTIONS!";
-           
+            NoticeUser?.Invoke(collision.gameObject.tag);
         }
     }
 
