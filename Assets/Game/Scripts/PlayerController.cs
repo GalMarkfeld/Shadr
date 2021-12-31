@@ -42,6 +42,11 @@ public class PlayerController : MonoBehaviour
         _rb = GetComponent<Rigidbody2D>();
         _bc = GetComponent<BoxCollider2D>();
         _anim = GetComponent<Animator>();
+
+        // Initialize color to black
+        renderer.material.color = colors[0];
+
+
     }
 
 

@@ -12,9 +12,12 @@ EditorBuildSettings:
     path: Assets/Game/Prefabs/Scenes/MainMenu.unity
     guid: d23f5263ae114774d8e2420105d992c0
   - enabled: 1
+    path: Assets/Game/Prefabs/Scenes/Platform testing.unity
+    guid: b0c7456aacb584f4da49d550a1eb79b5
+  - enabled: 1
     path: Assets/Game/Prefabs/Scenes/LevelSelect.unity
     guid: 70096cae46ce71b48a84ed225ba3ae58
   - enabled: 1
-    path: Assets/Game/Prefabs/Scenes/EDITED Tutorial Level.unity
-    guid: b15f849079e1a1147925a2eef0780246
+    path: Assets/Game/Prefabs/Scenes/NEW Tutorial.unity
+    guid: 672d03b486434ed4cad6bf794f642c69
   m_configObjects: {}
