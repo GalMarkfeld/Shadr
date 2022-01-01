@@ -13,16 +13,17 @@ public class PlayerController : MonoBehaviour
 
     // Player-specific
     [SerializeField] private LayerMask groundLayerMask;
-    private float baseMoveSpd = 6.5f;
+    private float baseMoveSpd = 6.65f;
     private float jumpForce = 18f;
-    private float gravity = 0.4f;
+    private float gravity = 0.2f;
     private float maxFallSpd = 35f;
+    private float playerJumpHoldFactor = 0.2f;
 
     private Vector2 speedVec = new Vector2(0f, 0f);
 
     private bool grounded = false;
     private bool groundedPrev = false;
-
+    private bool playerJump = false;        // tracks whether the player initialized a jump or not
     
     // Color-related
     Color[] colors = { Color.black, Color.red };
@@ -62,8 +63,9 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         float hinput = 0;
-        bool jinput = Input.GetKeyDown(KeyCode.Space);
-        bool sinput = Input.GetKeyDown(KeyCode.LeftShift);
+        bool jinput =       Input.GetKeyDown(KeyCode.Space);
+        bool jinputHold =   Input.GetKey(KeyCode.Space);
+        bool sinput =       Input.GetKeyDown(KeyCode.LeftShift);
 
         float hspeed = 0f;
         float vspeed = _rb.velocity.y;
@@ -87,22 +89,28 @@ public class PlayerController : MonoBehaviour
 
         hspeed = baseMoveSpd * hinput;
 
-        if (grounded && jinput)
-        {
-            vspeed = jumpForce;
-        }
-
         vspeed -= gravity;
         vspeed = Mathf.Max(vspeed, -maxFallSpd);
 
         if (jinput && grounded)
         {
             vspeed = jumpForce;
+            playerJump = true;
             //_rb.AddForce(GlobalVar.jumpForce * Vector3.up, ForceMode2D.Impulse);
         }
 
         groundedPrev = grounded;
         grounded = groundCheck();
+
+        if (!grounded)
+        {
+            if (vspeed < -0.25) {
+                playerJump = false;
+            } else if (!jinputHold && playerJump)
+            {
+                vspeed = Mathf.Lerp(vspeed, 0, playerJumpHoldFactor);
+            }
+        } 
 
         if (sinput)
         {
@@ -118,6 +126,7 @@ public class PlayerController : MonoBehaviour
 
         if (deathCheck()) OnLevelKill?.Invoke(false);
 
+        _rb.velocity = speedVec;
     }
 
     private bool deathCheck()
@@ -127,7 +136,7 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        _rb.velocity = speedVec;
+ //       _rb.velocity = speedVec;
     }
 
     private void OnDestroy()
