@@ -14,7 +14,7 @@ public class PlayerController : MonoBehaviour
     // Player-specific
     [SerializeField] private LayerMask groundLayerMask;
     public float baseMoveSpd = 6.65f;
-    private float jumpForce = 25f;
+    private float jumpForce = 18f;
     private float gravity = 0.2f;
     public float maxFallSpd = 35f;
     private float playerJumpHoldFactor = 0.2f;

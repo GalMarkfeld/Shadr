@@ -14,6 +14,7 @@ public class movingPlatform : MonoBehaviour
 
     //change color
     public bool switchOn; //on if we switch colors
+    public bool useCustomColor; // true if the spriteRenderer is given a different color beforehand
     public float changeSpeed; //switch speed
     public SpriteRenderer renderer; 
     private Color[] colors = { Color.red, Color.black };
@@ -51,6 +52,7 @@ public class movingPlatform : MonoBehaviour
        
         //move towards the destination point
         transform.position = Vector2.MoveTowards(transform.position, points[i].position, speed * Time.deltaTime);
+        if (useCustomColor) renderer.material.color = Color.white;
     }
 
 
