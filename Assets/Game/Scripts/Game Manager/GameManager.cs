@@ -166,6 +166,7 @@ public class GameManager : MonoBehaviour
 
     private void playerWon()
     {
+        Debug.Log("player won");
         obstacleWrongColorKill.text = "You Won!";
         if (currentLevel == 1)
         {

@@ -14,7 +14,7 @@ public class PlayerController : MonoBehaviour
     // Player-specific
     [SerializeField] private LayerMask groundLayerMask;
     public float baseMoveSpd = 6.65f;
-    private float jumpForce = 25f;
+    private float jumpForce = 50f;
     private float gravity = 0.2f;
     public float maxFallSpd = 35f;
     private float playerJumpHoldFactor = 0.2f;
@@ -196,6 +196,7 @@ public class PlayerController : MonoBehaviour
             OnLevelKill?.Invoke(false);
         } else if (collision.gameObject.tag == "End")
         {
+            Debug.Log("inside player controller");
             OnLevelWin?.Invoke();
             GlobalVar.isDead = true;
         } 
