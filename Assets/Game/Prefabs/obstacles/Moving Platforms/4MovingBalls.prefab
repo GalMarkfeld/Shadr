@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 3647612745379081233}
   m_Layer: 0
   m_Name: Platform 1
-  m_TagString: obstacle
+  m_TagString: moving_palform
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -127,6 +127,7 @@ MonoBehaviour:
   - {fileID: 8025263314023692134}
   StartColor: 1
   switchOn: 0
+  useCustomColor: 0
   changeSpeed: 0.3
   renderer: {fileID: 4530433530774247979}
 --- !u!58 &3647612745379081233
@@ -160,7 +161,7 @@ GameObject:
   - component: {fileID: 8927410427430234977}
   m_Layer: 0
   m_Name: Platform 0
-  m_TagString: obstacle
+  m_TagString: moving_palform
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -272,6 +273,7 @@ MonoBehaviour:
   - {fileID: 6939430524669737308}
   StartColor: 0
   switchOn: 0
+  useCustomColor: 0
   changeSpeed: 0
   renderer: {fileID: 4100582506379386838}
 --- !u!58 &8927410427430234977
@@ -398,7 +400,7 @@ GameObject:
   - component: {fileID: 4919871018489001557}
   m_Layer: 0
   m_Name: Platform 3
-  m_TagString: obstacle
+  m_TagString: moving_palform
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -510,6 +512,7 @@ MonoBehaviour:
   - {fileID: 5260789060523216072}
   StartColor: 0
   switchOn: 0
+  useCustomColor: 0
   changeSpeed: 0.3
   renderer: {fileID: 104831662681665904}
 --- !u!58 &4919871018489001557
@@ -574,7 +577,7 @@ GameObject:
   - component: {fileID: 8739090308128126694}
   m_Layer: 0
   m_Name: Platform 2
-  m_TagString: obstacle
+  m_TagString: moving_palform
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -686,6 +689,7 @@ MonoBehaviour:
   - {fileID: 5356620199348607657}
   StartColor: 1
   switchOn: 0
+  useCustomColor: 0
   changeSpeed: 0.3
   renderer: {fileID: 3790247783789653717}
 --- !u!58 &8739090308128126694
