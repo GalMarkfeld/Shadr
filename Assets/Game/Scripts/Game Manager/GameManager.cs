@@ -22,6 +22,8 @@ public class GameManager : MonoBehaviour
 
     public Text restartText;
 
+    public bool avoidTextPrompts;
+
     //public Text scoreText;
     //public Text highScoreText;
 
@@ -68,9 +70,15 @@ public class GameManager : MonoBehaviour
         PlayerController.NoticeUser += setNotice;
     }
 
+    private void Update()
+    {
+        
+    }
+
     //Gal edit
     private void setNotice(String tag)
     {
+        
         Debug.Log("In set notice");
         if (tag== "Shift Notice")
         {
@@ -92,7 +100,16 @@ public class GameManager : MonoBehaviour
             Debug.Log("combination");
             Notice.text = "TRY BOTH OPTIONS!";
 
-        } 
+        }
+
+
+        // Roey updated
+        if (avoidTextPrompts)
+        {
+            Debug.Log("Roey update - ignoring text in non-tutorial level!");
+            clearText(Notice);
+
+        }
     }
 
     private void Start()
@@ -115,8 +132,16 @@ public class GameManager : MonoBehaviour
             //GameConfig.cameraSpeed = 0;
 
             if (isObstacle)
+            /*
+            if (!avoidTextPrompts)
             {
-                
+                clearText(obstacleWrongColorKill);
+                clearText(restartText);
+
+            }
+            */
+            {
+
                 obstacleWrongColorKill.text = "SWITCH TO THE SAME COLOR!";
                 
             
