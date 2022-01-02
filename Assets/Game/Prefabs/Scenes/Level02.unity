@@ -440,7 +440,7 @@ PrefabInstance:
       objectReference: {fileID: 1435973284}
     - target: {fileID: 6628699711987415481, guid: 13009dd5b1b36cd40a86efc35a2e6282, type: 3}
       propertyPath: currentLevel
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6628699711987415481, guid: 13009dd5b1b36cd40a86efc35a2e6282, type: 3}
       propertyPath: obstacleWrongColorKill
@@ -581,7 +581,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 87636402535111228, guid: eb66056a11716ca4e92da88a7eb88069, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 461.5
+      value: 600.4
       objectReference: {fileID: 0}
     - target: {fileID: 87636402535111228, guid: eb66056a11716ca4e92da88a7eb88069, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -1373,7 +1373,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 87636402535111228, guid: eb66056a11716ca4e92da88a7eb88069, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 461.5
+      value: 600.4
       objectReference: {fileID: 0}
     - target: {fileID: 87636402535111228, guid: eb66056a11716ca4e92da88a7eb88069, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -2095,7 +2095,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 87636402535111228, guid: eb66056a11716ca4e92da88a7eb88069, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 461.5
+      value: 600.4
       objectReference: {fileID: 0}
     - target: {fileID: 87636402535111228, guid: eb66056a11716ca4e92da88a7eb88069, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -2149,7 +2149,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8266883846504124691, guid: eb66056a11716ca4e92da88a7eb88069, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
-      value: 1
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 8266883846504124691, guid: eb66056a11716ca4e92da88a7eb88069, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
