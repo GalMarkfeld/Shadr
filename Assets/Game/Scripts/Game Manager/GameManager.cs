@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -24,8 +25,9 @@ public class GameManager : MonoBehaviour
     //public Text scoreText;
     //public Text highScoreText;
 
-    //[Header("Levels")]
-    ////public List<Level> levels = new List<Level>();
+    [Header("Levels")]
+    public int currentLevel = 0;
+    //public List<Level> levels = new List<Level>();
 
     //[Space]
     //public UnityEvent LevelFinishedEvent;
@@ -69,21 +71,25 @@ public class GameManager : MonoBehaviour
     //Gal edit
     private void setNotice(String tag)
     {
-        
+        Debug.Log("In set notice");
         if (tag== "Shift Notice")
         {
+            Debug.Log("shift");
             Notice.text = "PRESS SHIFT!";
         }
         else if (tag == "Jump Notice")
         {
+            Debug.Log("space");
             Notice.text = "PRESS SPACE!";
         }
         else if (tag == "Double Shift Notice")
         {
+            Debug.Log("In double shift");
             Notice.text = "PRESS SHIFT MULTIPLE TIMES!";
         }
         else if (tag == "Combination Notice")
         {
+            Debug.Log("combination");
             Notice.text = "TRY BOTH OPTIONS!";
 
         } 
@@ -99,7 +105,7 @@ public class GameManager : MonoBehaviour
     {
 
 
-        if (_level == 0)
+        if (currentLevel == 1)
         {
 
             clearText(Notice);
@@ -134,7 +140,11 @@ public class GameManager : MonoBehaviour
             
             
         }
-        
+        else
+        {
+            SceneManager.LoadScene(0);
+            //We should add here code that will call the level selection menu
+        }
         
         //call restart game
 
@@ -156,13 +166,14 @@ public class GameManager : MonoBehaviour
 
     private void playerWon()
     {
-        if (_level == 0)
+        obstacleWrongColorKill.text = "You Won!";
+        if (currentLevel == 1)
         {
             //GameConfig.cameraSpeed = 0;
 
-            obstacleWrongColorKill.text = "You Won!";
+            //obstacleWrongColorKill.text = "You Won!";
             clearText(Notice);
-            
+
         }
     }
 
@@ -175,6 +186,7 @@ public class GameManager : MonoBehaviour
 
     private void restartGame()
     {
+
         GameObject player = GameObject.Find("Player");
         GameObject levelStart = GameObject.Find("PlayerSpawn");
 

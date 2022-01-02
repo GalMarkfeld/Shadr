@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 2814156164737062906}
   m_Layer: 0
   m_Name: Platform
-  m_TagString: obstacle
+  m_TagString: moving_palform
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -125,10 +125,10 @@ MonoBehaviour:
   points:
   - {fileID: 397254515987409645}
   - {fileID: 6939430524669737308}
+  StartColor: 0
   switchOn: 0
   changeSpeed: 0.3
   renderer: {fileID: 4100582506379386838}
-  StartColor: 0
 --- !u!61 &2814156164737062906
 BoxCollider2D:
   m_ObjectHideFlags: 0

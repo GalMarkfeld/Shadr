@@ -13,10 +13,10 @@ public class PlayerController : MonoBehaviour
 
     // Player-specific
     [SerializeField] private LayerMask groundLayerMask;
-    private float baseMoveSpd = 6.65f;
-    private float jumpForce = 18f;
+    public float baseMoveSpd = 6.65f;
+    private float jumpForce = 25f;
     private float gravity = 0.2f;
-    private float maxFallSpd = 35f;
+    public float maxFallSpd = 35f;
     private float playerJumpHoldFactor = 0.2f;
 
     private Vector2 speedVec = new Vector2(0f, 0f);
@@ -171,7 +171,18 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "obstacle")
+        if(collision.gameObject.tag == "moving_palform")
+        {
+            Color obstacleColor = collision.gameObject.GetComponent<SpriteRenderer>().material.color;
+            Debug.Log("this is obstacle: "+obstacleColor);
+            if (colors[currentColor] != obstacleColor)
+            {
+                Debug.Log(colors[currentColor]);
+                GlobalVar.isDead = true;
+                OnLevelKill?.Invoke(true);
+            }
+        }
+        else if (collision.gameObject.tag == "obstacle")
         {
             Color obstacleColor = collision.gameObject.GetComponent<SpriteRenderer>().color;
             if (colors[currentColor] != obstacleColor)
