@@ -202,7 +202,7 @@ PrefabInstance:
       objectReference: {fileID: 1435973284}
     - target: {fileID: 6628699711987415481, guid: 13009dd5b1b36cd40a86efc35a2e6282, type: 3}
       propertyPath: currentLevel
-      value: 1
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 6628699711987415481, guid: 13009dd5b1b36cd40a86efc35a2e6282, type: 3}
       propertyPath: obstacleWrongColorKill

@@ -11,9 +11,12 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Game/Prefabs/Scenes/MainMenu.unity
     guid: d23f5263ae114774d8e2420105d992c0
-  - enabled: 1
+  - enabled: 0
     path: Assets/Game/Prefabs/Scenes/LevelSelect.unity
     guid: 70096cae46ce71b48a84ed225ba3ae58
+  - enabled: 1
+    path: Assets/Game/Prefabs/Scenes/SelectLevel.unity
+    guid: c0a8b1eea301602459fa49e00ed6fc53
   - enabled: 1
     path: Assets/Game/Prefabs/Scenes/leve01.unity
     guid: 93eea5e4e55c5794f8855f06597def88
@@ -32,4 +35,7 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Game/Prefabs/Scenes/Unused Scenes/EDITED Tutorial Level.unity
     guid: b15f849079e1a1147925a2eef0780246
+  - enabled: 1
+    path: Assets/Game/Prefabs/Scenes/NEW Tutorial 1.unity
+    guid: dd53b5025b2b47348af3155e98b21d56
   m_configObjects: {}

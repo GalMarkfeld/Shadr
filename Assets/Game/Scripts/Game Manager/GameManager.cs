@@ -122,7 +122,7 @@ public class GameManager : MonoBehaviour
     {
 
 
-        if (currentLevel == 1)
+        if (currentLevel == 6)
         {
 
             clearText(Notice);
@@ -193,7 +193,7 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("player won");
         obstacleWrongColorKill.text = "You Won!";
-        if (currentLevel == 1)
+        if (currentLevel == 6)
         {
             //GameConfig.cameraSpeed = 0;
 
