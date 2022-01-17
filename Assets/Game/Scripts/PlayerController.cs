@@ -14,17 +14,29 @@ public class PlayerController : MonoBehaviour
     // Player-specific
     [SerializeField] private LayerMask groundLayerMask;
     public float baseMoveSpd = 6.65f;
-    private float jumpForce = 50f;
-    private float gravity = 0.2f;
+    private float jumpForce = 23f;
+    private float wallJumpForce = 17f;
+    private float gravity = 0.35f;
     public float maxFallSpd = 35f;
-    private float playerJumpHoldFactor = 0.2f;
+    private float playerJumpHoldFactor = 0.25f;  //higher makes the not holding lerp vspeed to 0 more quickly
 
     private Vector2 speedVec = new Vector2(0f, 0f);
 
+    private float hinput = 0f;
+
+    public bool startFacingLeft = false; // could be done directly through hinput, but I don't want to confuse by touching hinput more
     private bool grounded = false;
     private bool groundedPrev = false;
     private bool playerJump = false;        // tracks whether the player initialized a jump or not
-    
+
+    //Timers
+    private int jinputCounter = 0;
+    private int jumpBufferTime = 6;     // how long before a jump input exists
+    private int coyoteCounter = 0;
+    private int coyoteTime = 8;        // how many frames of leeway the player gets to jump after they shouldn't be able to
+
+
+
     // Color-related
     Color[] colors = { Color.black, Color.red };
     public SpriteRenderer renderer;
@@ -43,26 +55,22 @@ public class PlayerController : MonoBehaviour
         _rb = GetComponent<Rigidbody2D>();
         _bc = GetComponent<BoxCollider2D>();
         _anim = GetComponent<Animator>();
-
-        // Initialize color to black
-        renderer.material.color = colors[0];
-
-
     }
 
 
     // Start is called before the first frame update
     void Start()
     {
-        currentColor = 0;
+
+        resetState();
+        InputManager.OnRestart += resetState;
         //InputManager.OnJump += Jump;
         //InputManager.OnColorChange += ChangeColor;
-      
+
     }
 
     private void Update()
     {
-        float hinput = 0;
         bool jinput =       Input.GetKeyDown(KeyCode.Space);
         bool jinputHold =   Input.GetKey(KeyCode.Space);
         bool sinput =       Input.GetKeyDown(KeyCode.LeftShift);
@@ -70,6 +78,9 @@ public class PlayerController : MonoBehaviour
         float hspeed = 0f;
         float vspeed = _rb.velocity.y;
 
+        int wallDir = 0; // 0 for no touch, +/- 1 for right/left wall touch
+
+        /*
         // Get raw inputs
         if (Input.GetKey(KeyCode.A))
         {
@@ -79,28 +90,44 @@ public class PlayerController : MonoBehaviour
         {
             hinput += 1f;
         }
-
+        */
 
         // OVERRIDE!
-
-        hinput = 1f;
         if (GlobalVar.isDead) hinput = 0f;
         // OVERRIDE!
+
+
+        // Update timers
+        if (jinputCounter > 0) jinputCounter--;
+        if (jinput) jinputCounter = jumpBufferTime;
+
+        if (coyoteCounter > 0) coyoteCounter--;
+
+
 
         hspeed = baseMoveSpd * hinput;
 
         vspeed -= gravity;
-        vspeed = Mathf.Max(vspeed, -maxFallSpd);
 
-        if (jinput && grounded)
+
+        groundedPrev = grounded;    
+        grounded = groundCheck();   // check if any ground is being touched
+        wallDir = wallTouchCheck(); // check if any walls are being touched
+
+        if (grounded)
         {
-            vspeed = jumpForce;
-            playerJump = true;
-            //_rb.AddForce(GlobalVar.jumpForce * Vector3.up, ForceMode2D.Impulse);
+            if (jumpBuffered())
+            {
+                coyoteCounter = coyoteTime;
+            }
         }
 
-        groundedPrev = grounded;
-        grounded = groundCheck();
+        if (coyoteCounter > 0)
+        {
+            useCoyoteTime();
+            vspeed = jumpForce;
+            playerJump = true;
+        }
 
         if (!grounded)
         {
@@ -110,18 +137,37 @@ public class PlayerController : MonoBehaviour
             {
                 vspeed = Mathf.Lerp(vspeed, 0, playerJumpHoldFactor);
             }
-        } 
 
+           if (wallDir != 0 && jumpBuffered())
+            {
+                useJumpInput();
+                hinput *= -1;
+                hspeed = baseMoveSpd * hinput;
+                vspeed = wallJumpForce;
+                playerJump = true;
+            }
+        }
+
+
+        if (vspeed > 0) coyoteCounter = 0;  // stop them from abusing the leeway if they're already rising
+
+
+        // Color Switch updates
         if (sinput)
         {
             ChangeColor();
         }
 
+
         // Cosmetic updates
         _anim.SetFloat("vspeed", vspeed);
         _anim.SetBool("grounded", grounded);
 
+
+        // Physics Updates
+        vspeed = Mathf.Max(vspeed, -maxFallSpd);
         speedVec = new Vector3(hspeed, vspeed);
+        updateHeading();
 
 
         if (deathCheck()) OnLevelKill?.Invoke(false);
@@ -134,6 +180,23 @@ public class PlayerController : MonoBehaviour
         return (transform.position.y < -6);
     }
 
+    private bool jumpBuffered()
+    {
+        return (jinputCounter > 0);
+    }
+
+    private void useJumpInput()
+    {
+        jinputCounter = 0;
+        return;
+    }
+
+    private void useCoyoteTime()
+    {
+        coyoteCounter = 0;
+        useJumpInput();
+    }
+
     private void FixedUpdate()
     {
  //       _rb.velocity = speedVec;
@@ -141,6 +204,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnDestroy()
     {
+        InputManager.OnRestart -= resetState;
         //InputManager.OnJump -= Jump;
         //InputManager.OnColorChange -= ChangeColor;
     }
@@ -148,9 +212,40 @@ public class PlayerController : MonoBehaviour
 
     private bool groundCheck()
     {
-        float epsilon = 1f;
-        RaycastHit2D rc = Physics2D.BoxCast(_bc.bounds.center, new Vector2(_bc.size.x * 2, _bc.size.y / 4), 0f, Vector2.down, epsilon, groundLayerMask);
+        float distance = 1f;
+        RaycastHit2D rc = Physics2D.BoxCast(_bc.bounds.center, new Vector2(_bc.size.x * 0.5f, _bc.size.y / 4), 0f, Vector2.down, distance, groundLayerMask);
         return (rc.collider != null);
+    }
+
+    private int wallTouchCheck()
+    {
+        float distance = 1f;
+        RaycastHit2D rc = Physics2D.BoxCast(_bc.bounds.center, new Vector2(_bc.size.x, _bc.size.y / 4), 0f, new Vector2(Math.Sign(hinput), 0), distance, groundLayerMask);
+        if (rc.collider == null) return 0;
+        return (Math.Sign(rc.transform.position.x - transform.position.x));
+    }
+
+    private void updateHeading()
+    {
+        if (Math.Sign(hinput) > 0)
+        {
+            renderer.flipX = false;
+        } else
+        {
+            renderer.flipX = true;
+        }
+    }
+
+
+    private void resetState()
+    {
+
+        currentColor = 0;
+        renderer.material.color = colors[currentColor];
+
+        // Heading
+        hinput = startFacingLeft ? -1f : 1f;
+        updateHeading();
     }
 
     void OnDrawGizmos()
