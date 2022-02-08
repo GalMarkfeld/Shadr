@@ -13,6 +13,7 @@ TagManager:
   - Jump Notice
   - Combination Notice
   - Double Shift Notice
+  - jump_pad
   layers:
   - Default
   - TransparentFX

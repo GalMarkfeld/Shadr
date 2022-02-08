@@ -14,13 +14,16 @@ public class PlayerController : MonoBehaviour
     // Player-specific
     [SerializeField] private LayerMask groundLayerMask;
     public float baseMoveSpd = 6.65f;
-    private float jumpForce = 23f;
+    private float jumpForce = 21f;
     private float wallJumpForce = 17f;
     private float gravity = 0.35f;
     public float maxFallSpd = 35f;
     private float playerJumpHoldFactor = 0.25f;  //higher makes the not holding lerp vspeed to 0 more quickly
 
+    private float jumpPadForce = 50f;
+
     private Vector2 speedVec = new Vector2(0f, 0f);
+    private float holdOverVSpeed = 0f;
 
     private float hinput = 0f;
 
@@ -77,6 +80,9 @@ public class PlayerController : MonoBehaviour
 
         float hspeed = 0f;
         float vspeed = _rb.velocity.y;
+
+        vspeed += holdOverVSpeed;           // add any vertical velocity gained between updates (don't want to mix addForce and this custom stuff)
+        holdOverVSpeed = 0;
 
         int wallDir = 0; // 0 for no touch, +/- 1 for right/left wall touch
 
@@ -173,6 +179,7 @@ public class PlayerController : MonoBehaviour
         if (deathCheck()) OnLevelKill?.Invoke(false);
 
         _rb.velocity = speedVec;
+
     }
 
     private bool deathCheck()
@@ -213,7 +220,7 @@ public class PlayerController : MonoBehaviour
     private bool groundCheck()
     {
         float distance = 1f;
-        RaycastHit2D rc = Physics2D.BoxCast(_bc.bounds.center, new Vector2(_bc.size.x * 0.5f, _bc.size.y / 4), 0f, Vector2.down, distance, groundLayerMask);
+        RaycastHit2D rc = Physics2D.BoxCast(_bc.bounds.center, new Vector2(_bc.size.x * 0.3f, _bc.size.y / 4), 0f, Vector2.down, distance, groundLayerMask);
         return (rc.collider != null);
     }
 
@@ -266,37 +273,56 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.gameObject.tag == "moving_palform")
+        Color obstacleColor;
+        switch (collision.gameObject.tag)
         {
-            Color obstacleColor = collision.gameObject.GetComponent<SpriteRenderer>().material.color;
-            Debug.Log("this is obstacle: "+obstacleColor);
-            if (colors[currentColor] != obstacleColor)
-            {
-                Debug.Log(colors[currentColor]);
-                GlobalVar.isDead = true;
-                OnLevelKill?.Invoke(true);
-            }
-        }
-        else if (collision.gameObject.tag == "obstacle")
-        {
-            Color obstacleColor = collision.gameObject.GetComponent<SpriteRenderer>().color;
-            if (colors[currentColor] != obstacleColor)
-            {
-                GlobalVar.isDead = true;
-                OnLevelKill?.Invoke(true);                
-            }
-        } else if(collision.gameObject.tag == "Floor")
+            case "moving_palform":
+                obstacleColor = collision.gameObject.GetComponent<SpriteRenderer>().material.color;
+                Debug.Log("this is obstacle: " + obstacleColor);
+                if (colors[currentColor] != obstacleColor)
+                {
+                    Debug.Log(colors[currentColor]);
+                    GlobalVar.isDead = true;
+                    OnLevelKill?.Invoke(true);
+                }
 
-        {
-            OnLevelKill?.Invoke(false);
-        } else if (collision.gameObject.tag == "End")
-        {
-            Debug.Log("inside player controller");
-            OnLevelWin?.Invoke();
-            GlobalVar.isDead = true;
-        } 
+                break;
+
+            case "obstacle":
+                obstacleColor = collision.gameObject.GetComponent<SpriteRenderer>().color;
+                if (colors[currentColor] != obstacleColor)
+                {
+                    GlobalVar.isDead = true;
+                    OnLevelKill?.Invoke(true);
+                }
+                print("obs");
+                break;
+
+
+            case "jump_pad":
+                
+                holdOverVSpeed = jumpPadForce;
+
+                print("jump pad");
+                break;
+
+            case "Floor":
+                OnLevelKill?.Invoke(false);
+
+                break;
+
+            case "End":
+                Debug.Log("inside player controller");
+                OnLevelWin?.Invoke();
+                GlobalVar.isDead = true;
+
+                break;
+        }
+        
+
+
         //Gal edit: invoke event with proper trigger tag                
-        else if (collision.gameObject.tag.Contains("Notice"))
+        if (collision.gameObject.tag.Contains("Notice"))
         {
             NoticeUser?.Invoke(collision.gameObject.tag);
         }
