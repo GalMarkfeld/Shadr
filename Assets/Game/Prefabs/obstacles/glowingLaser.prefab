@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4429311757775082151}
-  - component: {fileID: 3947800308776599506}
+  - component: {fileID: 7102372729542014233}
   m_Layer: 0
-  m_Name: VerticalDownLaser
+  m_Name: glowingLaser
   m_TagString: obstacle
   m_Icon: {fileID: 1206586993520771344, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -26,14 +26,14 @@ Transform:
   m_GameObject: {fileID: 707173400237153190}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 0, z: 1}
+  m_LocalScale: {x: 0.1, y: 0, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8903980944486775467}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3947800308776599506
+--- !u!114 &7102372729542014233
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -42,13 +42,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 707173400237153190}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97c69a97cf872864f8d6bc4691e2af60, type: 3}
+  m_Script: {fileID: 11500000, guid: e860ad8077501bd48ab94426e919cd1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   laserSpeed: 1
-  laserColor: 0
-  laserLength: 5
+  laserColor: 1
+  laserLength: 10
   renderer: {fileID: 7558249645024943812}
+  player: {fileID: 0}
+  distanceFromLaser: 10
 --- !u!1 &7164451964758442826
 GameObject:
   m_ObjectHideFlags: 0
@@ -101,7 +103,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 97b0b93b7ac76864c818cb0cd743b4f4, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

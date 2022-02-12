@@ -2,19 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Laser : MonoBehaviour
+public class glowingLaser : MonoBehaviour
 {
     public int laserSpeed;
     public int laserColor; //0 for red, 1 for black
     public int laserLength; 
     public SpriteRenderer renderer;
-    private Color[] colors = { Color.red, Color.black };
+    private Color[] colors = { new Color(64,0,0,1), new Color(0,64,0,1) }; //64 for strong intensity. otherwise wouldnt glow
     public Transform player;
     public float distanceFromLaser = 10;
 
     private void Start()
     {
-        renderer.material.color = colors[laserColor]; //init laser to desired color
+
+       
+        renderer.material.EnableKeyword("_EMISSION");
+        renderer.material.SetColor("_EmissionColor", colors[laserColor]);
+
     }
 
     // Update is called once per frame
