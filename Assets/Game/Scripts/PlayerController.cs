@@ -75,6 +75,8 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
 
+        
+
         resetState();
         InputManager.OnRestart += resetState;
 
@@ -296,6 +298,8 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        print("there was a coliisin\n");
+
         Color obstacleColor;
         switch (collision.gameObject.tag)
         {
@@ -311,8 +315,8 @@ public class PlayerController : MonoBehaviour
 
                 break;
 
-            case "obstacle":
-                obstacleColor = collision.gameObject.GetComponent<SpriteRenderer>().color;
+            case "obstacle":                
+                obstacleColor = collision.gameObject.GetComponent<SpriteRenderer>().color;               
                 if (colors[currentColor] != obstacleColor)
                 {
                     GlobalVar.isDead = true;

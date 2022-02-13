@@ -4,20 +4,22 @@ using UnityEngine;
 
 public class glowingLaser : MonoBehaviour
 {
-    public int laserSpeed;
+    public float laserSpeed;
     public int laserColor; //0 for red, 1 for black
-    public int laserLength; 
+    public float laserLength; 
     public SpriteRenderer renderer;
-    private Color[] colors = { new Color(64,0,0,1), new Color(0,64,0,1) }; //64 for strong intensity. otherwise wouldnt glow
+    private Color[] colors = { Color.black, Color.red }; //64 for strong intensity. otherwise wouldnt glow
     public Transform player;
     public float distanceFromLaser = 10;
 
     private void Start()
     {
 
-       
-        renderer.material.EnableKeyword("_EMISSION");
-        renderer.material.SetColor("_EmissionColor", colors[laserColor]);
+        renderer.material.color = colors[laserColor];
+
+        //emission is required for glow, emission color must have intensity
+        renderer.material.EnableKeyword("_EMISSION"); //enable the change in emission
+        renderer.material.SetColor("_EmissionColor", colors[laserColor] * Mathf.Pow(2,10)); //the exponent is the intensity of the color
 
     }
 
