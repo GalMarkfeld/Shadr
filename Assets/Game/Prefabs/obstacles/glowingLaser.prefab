@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7102372729542014233}
   m_Layer: 0
   m_Name: glowingLaser
-  m_TagString: moving_palform
+  m_TagString: laser
   m_Icon: {fileID: 1206586993520771344, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -49,6 +49,9 @@ MonoBehaviour:
   laserColor: 1
   laserLength: 10
   renderer: {fileID: 7558249645024943812}
+  colors:
+  - {r: 0, g: 0, b: 0, a: 1}
+  - {r: 1, g: 0, b: 0, a: 1}
   player: {fileID: 0}
   distanceFromLaser: 10
 --- !u!1 &7164451964758442826
@@ -64,7 +67,7 @@ GameObject:
   - component: {fileID: 8013390017762882946}
   m_Layer: 0
   m_Name: Sprite
-  m_TagString: moving_palform
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

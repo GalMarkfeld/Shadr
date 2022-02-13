@@ -16,6 +16,8 @@ TagManager:
   - jump_pad
   - moving_palform
   - laser
+  - obstacle1
+  - obstacle0
   layers:
   - Default
   - TransparentFX

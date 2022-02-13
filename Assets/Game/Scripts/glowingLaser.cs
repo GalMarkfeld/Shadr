@@ -8,20 +8,11 @@ public class glowingLaser : MonoBehaviour
     public int laserColor; //0 for red, 1 for black
     public float laserLength; 
     public SpriteRenderer renderer;
-    private Color[] colors = { Color.black, Color.red }; //64 for strong intensity. otherwise wouldnt glow
+    //public Color[] colors = { Color.black, Color.red }; //64 for strong intensity. otherwise wouldnt glow
+    //public Color[] colors = new Color[2];
     public Transform player;
     public float distanceFromLaser = 10;
 
-    private void Start()
-    {
-
-        renderer.material.color = colors[laserColor];
-
-        //emission is required for glow, emission color must have intensity
-        renderer.material.EnableKeyword("_EMISSION"); //enable the change in emission
-        renderer.material.SetColor("_EmissionColor", colors[laserColor] * Mathf.Pow(2,10)); //the exponent is the intensity of the color
-
-    }
 
     // Update is called once per frame
     void Update()

@@ -264,6 +264,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: glowingLaser
       objectReference: {fileID: 0}
+    - target: {fileID: 707173400237153190, guid: dd4fab7865b1f6d49a5014f553553fbb, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     - target: {fileID: 4429311757775082151, guid: dd4fab7865b1f6d49a5014f553553fbb, type: 3}
       propertyPath: m_RootOrder
       value: 15
@@ -315,6 +319,10 @@ PrefabInstance:
     - target: {fileID: 7102372729542014233, guid: dd4fab7865b1f6d49a5014f553553fbb, type: 3}
       propertyPath: distanceFromLaser
       value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 7164451964758442826, guid: dd4fab7865b1f6d49a5014f553553fbb, type: 3}
+      propertyPath: m_TagString
+      value: laser
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dd4fab7865b1f6d49a5014f553553fbb, type: 3}

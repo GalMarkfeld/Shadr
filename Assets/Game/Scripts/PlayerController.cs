@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public class PlayerController : MonoBehaviour
 {
@@ -51,9 +52,14 @@ public class PlayerController : MonoBehaviour
 
 
     // Color-related
-    Color[] colors = { Color.black, Color.red };
+    //Color[] colors = { Color.black, Color.red };
     public SpriteRenderer renderer;
     int currentColor;
+    //gal edit:
+    public Color[] colors = new Color[2];
+    GameObject[] obstacles;
+    
+
 
     // Subscribing to functions
     public static Action<bool> OnLevelKill = delegate { };
@@ -75,9 +81,8 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
 
-        
-
         resetState();
+
         InputManager.OnRestart += resetState;
 
         curMoveSpd = baseMoveSpd;
@@ -272,6 +277,47 @@ public class PlayerController : MonoBehaviour
     private void resetState()
     {
 
+        ////////////////////////////gal edit///////////////////////////////////////
+        
+        //create random colors
+        for(int i =0; i< colors.Length; i++)
+        {
+            colors[i] = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f));
+        }
+
+
+        obstacles = GameObject.FindGameObjectsWithTag("obstacle0");
+        foreach (GameObject obstacle in obstacles)
+        {
+            obstacle.GetComponent<SpriteRenderer>().color = colors[0];
+        }
+        obstacles = GameObject.FindGameObjectsWithTag("obstacle1");
+        foreach (GameObject obstacle in obstacles)
+        {
+            obstacle.GetComponent<SpriteRenderer>().color = colors[1];
+        }
+
+        obstacles = GameObject.FindGameObjectsWithTag("moving_palform");
+        foreach (GameObject obstacle in obstacles)
+        {
+            obstacle.GetComponent<movingPlatform>().colors = colors;
+            int startingColor = obstacle.GetComponent<movingPlatform>().StartColor;
+            obstacle.GetComponent<SpriteRenderer>().material.color = colors[startingColor];
+
+        }
+
+       
+
+
+
+
+
+
+
+
+
+        /////////////////////////////////////////////////////////////////////////
+
         currentColor = 0;
         renderer.material.color = colors[currentColor];
 
@@ -315,8 +361,18 @@ public class PlayerController : MonoBehaviour
 
                 break;
 
-            case "obstacle":                
+            case "obstacle0":                
                 obstacleColor = collision.gameObject.GetComponent<SpriteRenderer>().color;               
+                if (colors[currentColor] != obstacleColor)
+                {
+                    GlobalVar.isDead = true;
+                    OnLevelKill?.Invoke(true);
+                }
+                print("obs");
+                break;
+
+            case "obstacle1":
+                obstacleColor = collision.gameObject.GetComponent<SpriteRenderer>().color;
                 if (colors[currentColor] != obstacleColor)
                 {
                     GlobalVar.isDead = true;
@@ -358,7 +414,21 @@ public class PlayerController : MonoBehaviour
                 GlobalVar.isDead = true;
 
                 break;
+
+            case "laser":
+                obstacleColor = collision.gameObject.GetComponent<SpriteRenderer>().material.color;
+                Debug.Log("this is obstacle: " + obstacleColor);
+                if (colors[currentColor] != obstacleColor)
+                {
+                    Debug.Log(colors[currentColor]);
+                    GlobalVar.isDead = true;
+                    OnLevelKill?.Invoke(true);
+                }
+
+                break;
         }
+
+
         
 
 
