@@ -415,15 +415,10 @@ public class PlayerController : MonoBehaviour
 
                 break;
 
-            case "laser":
-                obstacleColor = collision.gameObject.GetComponent<SpriteRenderer>().material.color;
-                Debug.Log("this is obstacle: " + obstacleColor);
-                if (colors[currentColor] != obstacleColor)
-                {
+            case "laser":        
                     Debug.Log(colors[currentColor]);
                     GlobalVar.isDead = true;
-                    OnLevelKill?.Invoke(true);
-                }
+                    OnLevelKill?.Invoke(true);              
 
                 break;
         }
