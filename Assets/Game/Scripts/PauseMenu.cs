@@ -8,10 +8,12 @@ public class PauseMenu : MonoBehaviour
 
     [SerializeField]
     GameObject pauseMenu;
+    public int current;
 
-    private void Start()
+    private void Awake()
     {
         pauseMenu.SetActive(false);
+        Debug.Log("in pause start");
     }
 
     public void Pause()
@@ -29,12 +31,18 @@ public class PauseMenu : MonoBehaviour
     public void Home(int sceneID)
     {
         Time.timeScale = 1f;
-        SceneManager.LoadScene(sceneID);
+        SceneManager.LoadScene(0);
     }
 
-    public void restart(int sceneID)
+    public void restart()
     {
         Time.timeScale = 1f;    
-        SceneManager.LoadScene(sceneID);
+        SceneManager.LoadScene(current);
+    }
+
+    public void levelSelect()
+    {
+        Time.timeScale = 1f;
+        SceneManager.LoadScene(1);
     }
 }
