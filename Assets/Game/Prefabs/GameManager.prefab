@@ -614,6 +614,8 @@ MonoBehaviour:
   obstacleWrongColorKill: {fileID: 0}
   Notice: {fileID: 0}
   restartText: {fileID: 0}
+  avoidTextPrompts: 0
+  currentLevel: 0
   startPosition: {fileID: 0}
 --- !u!1 &6628699713225572668
 GameObject:
