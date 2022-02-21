@@ -16,17 +16,21 @@ public class movingPlatform : MonoBehaviour
     public bool switchOn; //on if we switch colors
     public bool useCustomColor; // true if the spriteRenderer is given a different color beforehand
     public float changeSpeed; //switch speed
-    public SpriteRenderer renderer; 
-    private Color[] colors = { Color.red, Color.black };
+    public SpriteRenderer renderer;
+    public Color[] colors = new Color[2];
+    
     private int j; //color index
 
 
     // Start is called before the first frame update
     void Start()
-    {           
+    {
+      
+
+
         i = startingPoint; //init i to the start color
 
-        renderer.material.color = colors[StartColor]; // change platfrom to start color
+        //renderer.material.color = colors[StartColor]; // change platfrom to start color
 
         //color switching
         j = StartColor; // init j for for first color

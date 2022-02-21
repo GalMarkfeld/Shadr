@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4429311757775082151}
   - component: {fileID: 3947800308776599506}
   m_Layer: 0
-  m_Name: VerticalDownLaser
+  m_Name: normalLlaser
   m_TagString: obstacle
   m_Icon: {fileID: 1206586993520771344, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -26,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 707173400237153190}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 0, z: 1}
+  m_LocalScale: {x: 0.1, y: 0.18, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8903980944486775467}
@@ -49,6 +49,8 @@ MonoBehaviour:
   laserColor: 0
   laserLength: 5
   renderer: {fileID: 7558249645024943812}
+  player: {fileID: 0}
+  distanceFromLaser: 10
 --- !u!1 &7164451964758442826
 GameObject:
   m_ObjectHideFlags: 0
