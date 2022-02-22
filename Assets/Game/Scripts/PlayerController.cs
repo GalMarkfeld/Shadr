@@ -7,7 +7,7 @@ using Random = UnityEngine.Random;
 
 public class PlayerController : MonoBehaviour
 {
-    
+
     private Rigidbody2D _rb;
     private BoxCollider2D _bc;
     private Animator _anim;
@@ -57,6 +57,13 @@ public class PlayerController : MonoBehaviour
     int currentColor;
     //gal edit:
     public Color[] colors = new Color[2];
+    public Color[,] colorOptions = {    { Color.red, Color.black },
+                                        { new Color(87/255f,66/255f,245/255f), new Color(245/255f,99/255f,66/255f) },                                        
+                                        { new Color(214/255f,41/255f,155/255f), new Color(41/255f,214/255f,100/255f) },
+                                        { new Color(255/255f,97/255f,165/255f), new Color(61/255f,13/255f,255/255f) },
+                                        { new Color(97/255f,255/255f,187/255f), new Color(149/255f,10/255f,255/255f) },
+                                        { new Color(105/255f,154/255f,219/255f), new Color(96/255f,184/255f,121/255f) },
+                                        };
     GameObject[] obstacles;
     
 
@@ -74,6 +81,7 @@ public class PlayerController : MonoBehaviour
         _rb = GetComponent<Rigidbody2D>();
         _bc = GetComponent<BoxCollider2D>();
         _anim = GetComponent<Animator>();
+    
     }
 
 
@@ -278,12 +286,11 @@ public class PlayerController : MonoBehaviour
     {
 
         ////////////////////////////gal edit///////////////////////////////////////
-        
-        //create random colors
-        for(int i =0; i< colors.Length; i++)
-        {
-            colors[i] = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f));
-        }
+
+        int currentColorOptions = Random.Range(0, colorOptions.GetLength(0) -1);
+        print(currentColorOptions);
+        colors[0] = colorOptions[currentColorOptions,0];
+        colors[1] = colorOptions[currentColorOptions,1];
 
 
         obstacles = GameObject.FindGameObjectsWithTag("obstacle0");
