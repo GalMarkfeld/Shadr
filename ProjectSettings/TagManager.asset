@@ -18,6 +18,9 @@ TagManager:
   - laser
   - obstacle1
   - obstacle0
+  - speed_boost
+  - kill_menu
+  - main_canvas
   layers:
   - Default
   - TransparentFX

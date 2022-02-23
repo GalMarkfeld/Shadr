@@ -80,7 +80,7 @@ public class PlayerController : MonoBehaviour
 
     //Gal edit
     public static Action<String> NoticeUser = delegate { };
-
+    
 
     private void Awake()
     {
@@ -98,6 +98,7 @@ public class PlayerController : MonoBehaviour
         resetState();
 
         InputManager.OnRestart += resetState;
+        GameManager.onLevelRestart += resetState;
 
         // initialize movement speed to the basic speed
         curMoveSpd = baseMoveSpd;
@@ -278,6 +279,7 @@ public class PlayerController : MonoBehaviour
     private void OnDestroy()
     {
         InputManager.OnRestart -= resetState;
+        GameManager.onLevelRestart -= resetState;
     }
 
     // am I touching the ground?
