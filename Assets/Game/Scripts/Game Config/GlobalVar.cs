@@ -13,7 +13,7 @@ public static class GlobalVar
 
     public static float cameraSpeed = 5;
 
- 
+    public static GameObject killMenuObject;
 
 
 }

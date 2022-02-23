@@ -8,18 +8,22 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    public GameObject menusCanvas;
+    public int menuOffset = 420;
+    //[SerializeField]
+    public GameObject killMenuObj;
+    //public GameObject mainCanvasObj;
 
+    public GameObject[] respawns;
     public static GameManager inst;
+    
     //public RunnerGameConfig gameConfig;
     //public Transform startPos;
 
     [Header("UI Reference")]
     public Text obstacleWrongColorKill;
-
     //Gal edit: made instructions into 1 text that changes
     public Text Notice;
-
-
     public Text restartText;
 
     public bool avoidTextPrompts;
@@ -31,20 +35,23 @@ public class GameManager : MonoBehaviour
     public int currentLevel = 0;
     //public List<Level> levels = new List<Level>();
 
-    //[Space]
+    [Space]
+    public DeathMenu theDeathScreen;
+    public GameObject pauseButton;
     //public UnityEvent LevelFinishedEvent;
 
     //public static Action<Level> OnLevelStart = delegate { };
 
-
+    
 
     //private int _score;
     //private int _highScore;
     private int _level = 0;
     public Transform startPosition;
-    
-    //private Level _currentLevel;
 
+    private Level _currentLevel;
+
+   
 
     void Awake()
     {
@@ -68,6 +75,22 @@ public class GameManager : MonoBehaviour
 
         //Gal edit
         PlayerController.NoticeUser += setNotice;
+
+        //killMenuObj = GameObject.FindGameObjectsWithTag("kill_menu")[0];
+        //mainCanvasObj = GameObject.FindGameObjectsWithTag("main_canvas")[0];
+        //Hide kill menu
+
+       // menusCanvas = GameObject.Find("Canvas-Menus");
+
+        //menusCanvas.transform.position += new Vector3(0, 0, menuOffset);
+        //ActivateMenu(false);
+        //killMenuObj.SetActive(false);
+        /*respawns = GameObject.FindGameObjectsWithTag("kill_menu");
+        foreach (GameObject respawn in respawns)
+        {
+            print("setting dont destroy");
+            DontDestroyOnLoad(respawn);
+        }*/
     }
 
     private void Update()
@@ -108,6 +131,7 @@ public class GameManager : MonoBehaviour
         {
             Debug.Log("Roey update - ignoring text in non-tutorial level!");
             clearText(Notice);
+            disableText();
 
         }
     }
@@ -117,6 +141,29 @@ public class GameManager : MonoBehaviour
         restartGame();
     }
 
+    /*private void OnDestroy()
+    {
+        print("on destroy scene");
+        //killMenuObj.SetActive(true);
+        mainCanvasObj.SetActive(true);
+    }*/
+
+    GameObject FindInActiveObjectByTag(string tag)
+    {
+
+        Transform[] objs = Resources.FindObjectsOfTypeAll<Transform>() as Transform[];
+        for (int i = 0; i < objs.Length; i++)
+        {
+            if (objs[i].hideFlags == HideFlags.None)
+            {
+                if (objs[i].CompareTag(tag))
+                {
+                    return objs[i].gameObject;
+                }
+            }
+        }
+        return null;
+    }
 
     private void killPlayer(bool isObstacle)
     {
@@ -167,8 +214,16 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            SceneManager.LoadScene(0);
+            Time.timeScale = 0f;
+            theDeathScreen.gameObject.SetActive(true);
+            pauseButton.gameObject.SetActive(false);
+
+            //SceneManager.LoadScene(0);
             //We should add here code that will call the level selection menu
+            //mainCanvasObj.SetActive(false);
+            //menusCanvas.transform.position -= new Vector3(0, 0, menuOffset);
+            //killMenuObj.SetActive(true);
+            //ActivateMenu(true);
         }
         
         //call restart game
@@ -210,8 +265,10 @@ public class GameManager : MonoBehaviour
     //}
 
 
-    private void restartGame()
+    public void restartGame()
     {
+        theDeathScreen.gameObject.SetActive(false);
+        Time.timeScale = 1f;
 
         GameObject player = GameObject.Find("Player");
         GameObject levelStart = GameObject.Find("PlayerSpawn");
@@ -236,6 +293,38 @@ public class GameManager : MonoBehaviour
     private void clearText(Text text)
     {
         text.text = "";
+    }
+
+    public void restartLevel()
+    {
+        /*if(_currentLevel)
+            Destroy(_currentLevel.gameObject);
+
+        _currentLevel = Instantiate(levels[0]).GetComponent<Level>();*/
+        //killMenuObj.SetActive(false);
+        //ActivateMenu(false);
+        this.restartGame();
+        Time.timeScale = 1f;
+
+        //    ball.position = startPos.position;
+        //    helix.rotation = Quaternion.identity;
+    }
+
+    private void ActivateMenu(bool status)
+    {
+        respawns = GameObject.FindGameObjectsWithTag("kill_menu");
+        foreach (GameObject respawn in respawns)
+        {
+            print("setting active false");
+            respawn.SetActive(status);
+        }
+    }
+
+    private void disableText()
+    {
+        Notice.gameObject.SetActive(false);
+        obstacleWrongColorKill.gameObject.SetActive(false);
+        restartText.gameObject.SetActive(false);
     }
 
     //////////private void Awake()
