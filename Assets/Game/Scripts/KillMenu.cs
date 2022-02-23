@@ -8,6 +8,7 @@ public class KillMenu : MonoBehaviour
 
     private static KillMenu instance;
 
+    public static System.Action onLevelRestart = delegate { };
 
     [SerializeField]
     public GameObject killMenu;
@@ -18,6 +19,8 @@ public class KillMenu : MonoBehaviour
         //killMenu.SetActive(false); ;
         Debug.Log("in kill menu awake");
         print(killMenu.activeInHierarchy);
+
+        GameManager.onLevelRestart += restart;
 
         //killMenuObj = GameObject.FindGameObjectsWithTag("kill_menu")[0];
         //Check if instance already exists
@@ -64,6 +67,7 @@ public class KillMenu : MonoBehaviour
         //killMenuObj.SetActive(true);
         Time.timeScale = 1f;    
         SceneManager.LoadScene(current);
+        
     }
 
     public void levelSelect()

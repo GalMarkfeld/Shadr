@@ -259,7 +259,9 @@ public class GameManager : MonoBehaviour
 
         clearText(obstacleWrongColorKill);
         clearText(restartText);
-        
+
+        onLevelRestart?.Invoke();
+
     }
 
 
@@ -276,8 +278,8 @@ public class GameManager : MonoBehaviour
         _currentLevel = Instantiate(levels[0]).GetComponent<Level>();*/
         //killMenuObj.SetActive(false);
         //ActivateMenu(false);
+
         restartGame();
-        
 
     }
 

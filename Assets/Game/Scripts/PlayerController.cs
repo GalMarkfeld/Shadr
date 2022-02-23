@@ -243,6 +243,7 @@ public class PlayerController : MonoBehaviour
 
         if (deathCheck()) OnLevelKill?.Invoke(false);
 
+        //print("Hinput: " + hinput.ToString());
 
     }
 
@@ -355,7 +356,10 @@ public class PlayerController : MonoBehaviour
 
         // initialize heading
         hinput = startFacingLeft ? -1f : 1f;
+        setScale(new Vector3(1f, 1f, 1f));
         updateHeading();
+
+        print("Performed restart!");
     }
 
 
