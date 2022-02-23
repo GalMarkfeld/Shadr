@@ -10,8 +10,13 @@ public class glowingLaser : MonoBehaviour
     public SpriteRenderer renderer;
     //public Color[] colors = { Color.black, Color.red }; //64 for strong intensity. otherwise wouldnt glow
     //public Color[] colors = new Color[2];
-    public Transform player;
+    private Transform player;
     public float distanceFromLaser = 10;
+
+    private void Start()
+    {
+        player = GameObject.Find("Player").transform; 
+    }
 
 
     // Update is called once per frame

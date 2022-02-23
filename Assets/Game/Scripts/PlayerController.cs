@@ -32,7 +32,7 @@ public class PlayerController : MonoBehaviour
     private Vector2 speedVec = new Vector2(0f, 0f);
     private float holdOverVSpeed = 0f;
 
-    private float hinput = 0f;
+    private float hinput = 1f;
 
     public bool startFacingLeft = false; // could be done directly through hinput, but I don't want to confuse by touching hinput more
     private bool grounded = false;
@@ -53,7 +53,9 @@ public class PlayerController : MonoBehaviour
 
     // Color-related
     //Color[] colors = { Color.black, Color.red };
-    public SpriteRenderer renderer;
+    [SerializeField] private SpriteRenderer renderer;
+    private Transform spriteAnchor;
+
     int currentColor;
     //gal edit:
     public Color[] colors = new Color[2];
@@ -65,7 +67,11 @@ public class PlayerController : MonoBehaviour
                                         { new Color(105/255f,154/255f,219/255f), new Color(96/255f,184/255f,121/255f) },
                                         };
     GameObject[] obstacles;
-    
+
+
+    // Other Visual-related
+    private float scaleLerpFactor = 0.09f;
+
 
 
     // Subscribing to functions
@@ -78,10 +84,10 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
-        _rb = GetComponent<Rigidbody2D>();
+        _rb = GetComponent<Rigidbody2D>();        // we use the InChildren variant since we separated the sprite into a child of the player for Squash/Stretch effect
         _bc = GetComponent<BoxCollider2D>();
-        _anim = GetComponent<Animator>();
-    
+        spriteAnchor = transform.Find("SpriteAnchor");
+        _anim = spriteAnchor.Find("Sprite").GetComponent<Animator>();
     }
 
 
@@ -94,13 +100,12 @@ public class PlayerController : MonoBehaviour
         InputManager.OnRestart += resetState;
 
         curMoveSpd = baseMoveSpd;
-        //InputManager.OnJump += Jump;
-        //InputManager.OnColorChange += ChangeColor;
 
     }
 
     private void Update()
     {
+        // Begin each frame by getting inputs and carrying over relevant velocities and visual data
         bool jinput =       Input.GetKeyDown(KeyCode.Space);
         bool jinputHold =   Input.GetKey(KeyCode.Space);
         bool sinput =       Input.GetKeyDown(KeyCode.LeftShift);
@@ -111,7 +116,11 @@ public class PlayerController : MonoBehaviour
         vspeed += holdOverVSpeed;           // add any vertical velocity gained between updates (don't want to mix addForce and this custom stuff)
         holdOverVSpeed = 0;
 
+        Vector3 spriteScale = spriteAnchor.localScale;
 
+
+        // Unused player input
+        #region
         /*
         // Get raw inputs
         if (Input.GetKey(KeyCode.A))
@@ -123,11 +132,11 @@ public class PlayerController : MonoBehaviour
             hinput += 1f;
         }
         */
+        #endregion
 
-        // OVERRIDE!
+
+        // Input override if the player has lost
         if (GlobalVar.isDead) hinput = 0f;
-        // OVERRIDE!
-
 
         // Update timers
         if (jinputCounter > 0) jinputCounter--;
@@ -140,14 +149,18 @@ public class PlayerController : MonoBehaviour
         if (SpeedBoostMaintainCounter <= 0) {
             curMoveSpd = Mathf.Lerp(curMoveSpd, baseMoveSpd, SpeedBoostLossFactor);
         }
-        hspeed = curMoveSpd * hinput;
-
-        vspeed -= gravity;
-
+        
         groundedPrev = grounded;    
         grounded = groundCheck();   // check if any ground is being touched
         wallDirPrev = wallDir;
         wallDir = wallTouchCheck(); // check if any walls are being touched
+
+        bool wallSliding = wallDir != 0 && !jumpBuffered() && (vspeed < 0);
+
+        hspeed = curMoveSpd * hinput;
+        vspeed -= gravity * (wallSliding? 0.5f : 1f);
+
+
 
         if (grounded)
         {
@@ -162,6 +175,7 @@ public class PlayerController : MonoBehaviour
             useCoyoteTime();
             vspeed = jumpForce;
             playerJump = true;
+            setScale(new Vector3(0.5f, 1.3f));
         }
 
         if (!grounded)
@@ -199,26 +213,29 @@ public class PlayerController : MonoBehaviour
         // Cosmetic updates
         _anim.SetFloat("vspeed", vspeed);
         _anim.SetBool("grounded", grounded);
+        _anim.SetBool("wallSliding", wallSliding);
 
-        if (!groundedPrev && grounded)
+        if (!groundedPrev && grounded)        // if the player has just landed
         {
             makeDust();
+            setScale(new Vector3(1.3f, 0.5f));
+        }
+
+        if (hinput != 0)
+        {
+            updateHeading();
+            setScale(Vector3.Lerp(spriteAnchor.localScale, new Vector3(Math.Sign(hinput), 1f, 1f), scaleLerpFactor));
         }
 
         // Physics Updates
         vspeed = Mathf.Max(vspeed, -maxFallSpd);
         speedVec = new Vector3(hspeed, vspeed);
-        updateHeading();
-
-
+        
         if (deathCheck()) OnLevelKill?.Invoke(false);
 
         _rb.velocity = speedVec;
 
     }
-
-
-
 
     private bool deathCheck()
     {
@@ -270,25 +287,26 @@ public class PlayerController : MonoBehaviour
         return (Math.Sign(rc.transform.position.x - transform.position.x));
     }
 
+    private void setScale(Vector3 newScale)
+    {
+        spriteAnchor.localScale = newScale;
+    }
+
     private void updateHeading()
     {
-        if (Math.Sign(hinput) > 0)
-        {
-            renderer.flipX = false;
-        } else
-        {
-            renderer.flipX = true;
-        }
+        Vector3 scale = spriteAnchor.localScale;
+        scale.x = Math.Abs(scale.x) * Math.Sign(hinput);
+        setScale(scale);
     }
 
 
     private void resetState()
     {
 
-        ////////////////////////////gal edit///////////////////////////////////////
+        ////////////////////////////  gal edit  ///////////////////////////////////////
 
         int currentColorOptions = Random.Range(0, colorOptions.GetLength(0) -1);
-        print(currentColorOptions);
+        
         colors[0] = colorOptions[currentColorOptions,0];
         colors[1] = colorOptions[currentColorOptions,1];
 
@@ -298,6 +316,7 @@ public class PlayerController : MonoBehaviour
         {
             obstacle.GetComponent<SpriteRenderer>().color = colors[0];
         }
+
         obstacles = GameObject.FindGameObjectsWithTag("obstacle1");
         foreach (GameObject obstacle in obstacles)
         {
@@ -312,17 +331,8 @@ public class PlayerController : MonoBehaviour
             obstacle.GetComponent<SpriteRenderer>().material.color = colors[startingColor];
 
         }
-
-       
-
-
-
-
-
-
-
-
-
+        
+                             
         /////////////////////////////////////////////////////////////////////////
 
         currentColor = 0;
@@ -351,7 +361,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        print("there was a coliisin\n");
+        //print("there was a collision\n");
 
         Color obstacleColor;
         switch (collision.gameObject.tag)
@@ -392,7 +402,7 @@ public class PlayerController : MonoBehaviour
             case "jump_pad":
                 
                 bool jHold = Input.GetKey(KeyCode.Space);
-                holdOverVSpeed = jHold? jumpPadForce : jumpPadForceLarge;
+                holdOverVSpeed = jumpPadForce; // jHold ? jumpPadForce : jumpPadForceLarge;
 
                 print("jump pad");
                 break;
@@ -401,7 +411,7 @@ public class PlayerController : MonoBehaviour
 
                 SpeedBoosterManage booster = collision.gameObject.GetComponent<SpeedBoosterManage>();
                 if (booster.cooldownCounter <= 0) {
-                    curMoveSpd *= 1.5f;
+                    curMoveSpd *= 1.4f;
                     SpeedBoostMaintainCounter = SpeedBoostMaintainTime;
 
                     booster.cooldownCounter = booster.cooldownTime;
@@ -437,7 +447,7 @@ public class PlayerController : MonoBehaviour
         //Gal edit: invoke event with proper trigger tag                
         if (collision.gameObject.tag.Contains("Notice"))
         {
-            NoticeUser?.Invoke(collision.gameObject.tag);
+            NoticeUser?.Invoke(collision.gameObject.GetComponent<Notice>().text);
         }
     }
 
@@ -454,5 +464,8 @@ public class PlayerController : MonoBehaviour
 //        settings.startSpeed = dir;
         _ps_dust_WJ.Play();
     }
+
+
+
 
 }

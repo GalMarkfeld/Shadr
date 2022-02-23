@@ -76,32 +76,12 @@ public class GameManager : MonoBehaviour
     }
 
     //Gal edit
-    private void setNotice(String tag)
+    private void setNotice(String text)
     {
         
         Debug.Log("In set notice");
-        if (tag== "Shift Notice")
-        {
-            Debug.Log("shift");
-            Notice.text = "PRESS SHIFT!";
-        }
-        else if (tag == "Jump Notice")
-        {
-            Debug.Log("space");
-            Notice.text = "PRESS SPACE!";
-        }
-        else if (tag == "Double Shift Notice")
-        {
-            Debug.Log("In double shift");
-            Notice.text = "PRESS SHIFT MULTIPLE TIMES!";
-        }
-        else if (tag == "Combination Notice")
-        {
-            Debug.Log("combination");
-            Notice.text = "TRY BOTH OPTIONS!";
-
-        }
-
+        Notice.text = text;
+        
 
         // Roey updated
         if (avoidTextPrompts)

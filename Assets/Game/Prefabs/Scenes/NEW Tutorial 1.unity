@@ -133,6 +133,7 @@ GameObject:
   m_Component:
   - component: {fileID: 26779969}
   - component: {fileID: 26779968}
+  - component: {fileID: 26779970}
   m_Layer: 0
   m_Name: 'Jump Notice '
   m_TagString: Jump Notice
@@ -181,6 +182,19 @@ Transform:
   m_Father: {fileID: 856605238}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &26779970
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 26779967}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7021630e37170b047a10bcb4b541573c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  text: PRESS SPACE!
 --- !u!1001 &171545114
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -315,64 +329,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c4da043669514924992454b7ae49fdc1, type: 3}
---- !u!1 &382480319
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 382480321}
-  - component: {fileID: 382480320}
-  m_Layer: 0
-  m_Name: 'Combination Notice '
-  m_TagString: Combination Notice
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!61 &382480320
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 382480319}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 5.3783054}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 1, y: 14.307859}
-  m_EdgeRadius: 0
---- !u!4 &382480321
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 382480319}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 9.314659, y: -5.9539385, z: 0.3706892}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 856605238}
-  m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &474268141
 GameObject:
   m_ObjectHideFlags: 0
@@ -909,7 +865,6 @@ Transform:
   - {fileID: 1213932398}
   - {fileID: 26779969}
   - {fileID: 1053210048}
-  - {fileID: 382480321}
   m_Father: {fileID: 0}
   m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -933,6 +888,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1053210048}
   - component: {fileID: 1053210047}
+  - component: {fileID: 1053210049}
   m_Layer: 0
   m_Name: 'Double Shift Notice '
   m_TagString: Double Shift Notice
@@ -981,6 +937,19 @@ Transform:
   m_Father: {fileID: 856605238}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1053210049
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1053210046}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7021630e37170b047a10bcb4b541573c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  text: SWITCH MULTIPLE TIMES!
 --- !u!1 &1213932396
 GameObject:
   m_ObjectHideFlags: 0
@@ -991,6 +960,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1213932398}
   - component: {fileID: 1213932397}
+  - component: {fileID: 1213932399}
   m_Layer: 0
   m_Name: Shift Notice
   m_TagString: Shift Notice
@@ -1039,6 +1009,19 @@ Transform:
   m_Father: {fileID: 856605238}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1213932399
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1213932396}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7021630e37170b047a10bcb4b541573c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  text: PRESS SHIFT!
 --- !u!224 &1336182225 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6230593750611290728, guid: aa3c8a958cc2d0f47b43587548a91da9, type: 3}
