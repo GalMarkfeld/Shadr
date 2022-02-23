@@ -26,8 +26,6 @@ public class movingPlatform : MonoBehaviour
     void Start()
     {
       
-
-
         i = startingPoint; //init i to the start color
 
         //renderer.material.color = colors[StartColor]; // change platfrom to start color

@@ -9,36 +9,36 @@ EditorBuildSettings:
     path: 
     guid: 00000000000000000000000000000000
   - enabled: 1
-    path: Assets/Game/Prefabs/Scenes/MainMenu.unity
+    path: Assets/Game/Scenes/Menus/MainMenu.unity
     guid: d23f5263ae114774d8e2420105d992c0
   - enabled: 0
-    path: Assets/Game/Prefabs/Scenes/LevelSelect.unity
+    path: Assets/Game/Scenes/Menus/LevelSelect.unity
     guid: 70096cae46ce71b48a84ed225ba3ae58
   - enabled: 1
-    path: Assets/Game/Prefabs/Scenes/SelectLevel.unity
+    path: Assets/Game/Scenes/Menus/SelectLevel.unity
     guid: c0a8b1eea301602459fa49e00ed6fc53
   - enabled: 1
-    path: Assets/Game/Prefabs/Scenes/leve01.unity
+    path: Assets/Game/Scenes/Level_01.unity
     guid: 93eea5e4e55c5794f8855f06597def88
   - enabled: 1
-    path: Assets/Game/Prefabs/Scenes/Level02.unity
+    path: Assets/Game/Scenes/Level02.unity
     guid: c947c4409bd6abe4594ced36b66cf12b
   - enabled: 1
-    path: Assets/Game/Prefabs/Scenes/Level05.unity
+    path: Assets/Game/Scenes/Level05.unity
     guid: 672d03b486434ed4cad6bf794f642c69
   - enabled: 1
-    path: Assets/Game/Prefabs/Scenes/Level07.unity
+    path: Assets/Game/Scenes/Level07.unity
     guid: 86dc0088179a2b840a78b6d9a92fd84a
   - enabled: 1
-    path: Assets/Game/Prefabs/Scenes/leve10.unity
+    path: Assets/Game/Scenes/leve10.unity
     guid: 9611e7f703a6b3043800494355b2f775
   - enabled: 0
-    path: Assets/Game/Prefabs/Scenes/Level 1.unity
+    path: Assets/Game/Scenes/Level 1.unity
     guid: 8df45903c7457294b8e17ca4b732d2d9
   - enabled: 0
-    path: Assets/Game/Prefabs/Scenes/Unused Scenes/EDITED Tutorial Level.unity
+    path: Assets/Game/Scenes/Unused Scenes/EDITED Tutorial Level.unity
     guid: b15f849079e1a1147925a2eef0780246
   - enabled: 1
-    path: Assets/Game/Prefabs/Scenes/NEW Tutorial 1.unity
+    path: Assets/Game/Scenes/00 Tutorial.unity
     guid: dd53b5025b2b47348af3155e98b21d56
   m_configObjects: {}

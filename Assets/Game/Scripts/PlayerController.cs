@@ -84,7 +84,7 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
-        _rb = GetComponent<Rigidbody2D>();        // we use the InChildren variant since we separated the sprite into a child of the player for Squash/Stretch effect
+        _rb = GetComponent<Rigidbody2D>();        
         _bc = GetComponent<BoxCollider2D>();
         spriteAnchor = transform.Find("SpriteAnchor");
         _anim = spriteAnchor.Find("Sprite").GetComponent<Animator>();
@@ -94,11 +94,12 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        // ensure that all variables and states are reset upon instantiation
         resetState();
 
         InputManager.OnRestart += resetState;
 
+        // initialize movement speed to the basic speed
         curMoveSpd = baseMoveSpd;
 
     }
@@ -119,7 +120,7 @@ public class PlayerController : MonoBehaviour
         Vector3 spriteScale = spriteAnchor.localScale;
 
 
-        // Unused player input
+        // Unused player input - keeping for testing purposes
         #region
         /*
         // Get raw inputs
@@ -144,12 +145,14 @@ public class PlayerController : MonoBehaviour
 
         if (coyoteCounter > 0) coyoteCounter--;
         if (SpeedBoostMaintainCounter > 0) SpeedBoostMaintainCounter--;
-        // Update horizontal speed
 
+
+        // Update horizontal speed
         if (SpeedBoostMaintainCounter <= 0) {
             curMoveSpd = Mathf.Lerp(curMoveSpd, baseMoveSpd, SpeedBoostLossFactor);
         }
         
+        // Collision interaction boolean updates
         groundedPrev = grounded;    
         grounded = groundCheck();   // check if any ground is being touched
         wallDirPrev = wallDir;
@@ -161,7 +164,8 @@ public class PlayerController : MonoBehaviour
         vspeed -= gravity * (wallSliding? 0.5f : 1f);
 
 
-
+        // Provide "coyote time" - a moment where the player is off of a platform but for a moment can still jump
+        // (for a more forigiving experience)
         if (grounded)
         {
             if (jumpBuffered())
@@ -175,9 +179,12 @@ public class PlayerController : MonoBehaviour
             useCoyoteTime();
             vspeed = jumpForce;
             playerJump = true;
+
+            // apply stretch
             setScale(new Vector3(0.5f, 1.3f));
         }
 
+        // airborne state considerations (limiting fallspeed, handling walljumps, allowing player to hold jump for longer airtime)
         if (!grounded)
         {
             if (vspeed < -0.25) {
@@ -200,7 +207,7 @@ public class PlayerController : MonoBehaviour
         }
 
 
-        if (vspeed > 0) coyoteCounter = 0;  // stop them from abusing the leeway if they're already rising
+        if (vspeed > 0) coyoteCounter = 0;  // stop them from abusing the coyote time leeway if they're already rising
 
 
         // Color Switch updates
@@ -210,7 +217,7 @@ public class PlayerController : MonoBehaviour
         }
 
 
-        // Cosmetic updates
+        // Cosmetic updates (animations, colors, scale)
         _anim.SetFloat("vspeed", vspeed);
         _anim.SetBool("grounded", grounded);
         _anim.SetBool("wallSliding", wallSliding);
@@ -227,21 +234,24 @@ public class PlayerController : MonoBehaviour
             setScale(Vector3.Lerp(spriteAnchor.localScale, new Vector3(Math.Sign(hinput), 1f, 1f), scaleLerpFactor));
         }
 
+
         // Physics Updates
         vspeed = Mathf.Max(vspeed, -maxFallSpd);
         speedVec = new Vector3(hspeed, vspeed);
-        
+        _rb.velocity = speedVec;
+
         if (deathCheck()) OnLevelKill?.Invoke(false);
 
-        _rb.velocity = speedVec;
 
     }
 
+    // am I dead?
     private bool deathCheck()
     {
         return (transform.position.y < -6);
     }
 
+    // get if a jump is held in the jump timer buffer
     private bool jumpBuffered()
     {
         return (jinputCounter > 0);
@@ -253,6 +263,7 @@ public class PlayerController : MonoBehaviour
         return;
     }
 
+    // reset coyote timer to prevent multiple uses
     private void useCoyoteTime()
     {
         coyoteCounter = 0;
@@ -262,16 +273,14 @@ public class PlayerController : MonoBehaviour
     private void FixedUpdate()
     {
  //       _rb.velocity = speedVec;
-    }
+    } // <<<<-------------------------------- @CLEANUP -----------------------
 
     private void OnDestroy()
     {
         InputManager.OnRestart -= resetState;
-        //InputManager.OnJump -= Jump;
-        //InputManager.OnColorChange -= ChangeColor;
     }
 
-
+    // am I touching the ground?
     private bool groundCheck()
     {
         float distance = 1f;
@@ -279,6 +288,7 @@ public class PlayerController : MonoBehaviour
         return (rc.collider != null);
     }
 
+    // am I facing a wall? If so, which direction is it (1/-1 -> right/left)
     private int wallTouchCheck()
     {
         float distance = 1f;
@@ -287,11 +297,13 @@ public class PlayerController : MonoBehaviour
         return (Math.Sign(rc.transform.position.x - transform.position.x));
     }
 
+    // allows for distortion of the player's sprite
     private void setScale(Vector3 newScale)
     {
         spriteAnchor.localScale = newScale;
     }
 
+    // flip the player around based on their horizontal input
     private void updateHeading()
     {
         Vector3 scale = spriteAnchor.localScale;
@@ -305,6 +317,7 @@ public class PlayerController : MonoBehaviour
 
         ////////////////////////////  gal edit  ///////////////////////////////////////
 
+        // get a random pair of colors and apply that pallete to the entire level
         int currentColorOptions = Random.Range(0, colorOptions.GetLength(0) -1);
         
         colors[0] = colorOptions[currentColorOptions,0];
@@ -332,24 +345,17 @@ public class PlayerController : MonoBehaviour
 
         }
         
-                             
         /////////////////////////////////////////////////////////////////////////
 
+        // reset color
         currentColor = 0;
         renderer.material.color = colors[currentColor];
 
-        // Heading
+        // initialize heading
         hinput = startFacingLeft ? -1f : 1f;
         updateHeading();
     }
 
-    void OnDrawGizmos()
-    {
-        Gizmos.color = Color.red;
-
-        //Draw a cube at the maximum distance
-        //Gizmos.DrawWireCube(_bc.bounds.center - new Vector3(0, 1f), _bc.size/8);
-    }
 
 
     private void ChangeColor()
@@ -359,10 +365,10 @@ public class PlayerController : MonoBehaviour
         renderer.material.color = colors[currentColor];
     }
 
+
+    // Handle specific collision interactions
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        //print("there was a collision\n");
-
         Color obstacleColor;
         switch (collision.gameObject.tag)
         {
@@ -457,15 +463,22 @@ public class PlayerController : MonoBehaviour
         _ps_dust.Play();
     }
 
-    private void makeWJDust()
+    private void makeWJDust() // <<<<-------------------------------- @CLEANUP -----------------------
     {
-    //    int dir = Math.Sign(direction);
-  //      var settings = _ps_dust_WJ.main;
-//        settings.startSpeed = dir;
+     //   int dir = Math.Sign(direction);
+     //   var settings = _ps_dust_WJ.main;
+     //   settings.startSpeed = dir;
         _ps_dust_WJ.Play();
     }
 
 
 
+    // for testing purposes, shows hitboxes
+    void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
 
+        //Draw a cube at the maximum distance
+        //Gizmos.DrawWireCube(_bc.bounds.center - new Vector3(0, 1f), _bc.size/8);
+    }
 }
