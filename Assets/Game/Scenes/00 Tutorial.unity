@@ -547,6 +547,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 153748738}
     m_Modifications:
+    - target: {fileID: 1899761853179866949, guid: aa3c8a958cc2d0f47b43587548a91da9, type: 3}
+      propertyPath: endPosition
+      value: 
+      objectReference: {fileID: 1112301585}
+    - target: {fileID: 1899761853179866949, guid: aa3c8a958cc2d0f47b43587548a91da9, type: 3}
+      propertyPath: startPosition
+      value: 
+      objectReference: {fileID: 904601064}
     - target: {fileID: 6230593750569961472, guid: aa3c8a958cc2d0f47b43587548a91da9, type: 3}
       propertyPath: m_Color.b
       value: 0.60821235
@@ -798,31 +806,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 272591533}
   m_CullTransparentMesh: 1
---- !u!1 &275746628 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6230593750611290729, guid: aa3c8a958cc2d0f47b43587548a91da9, type: 3}
-  m_PrefabInstance: {fileID: 265114967}
-  m_PrefabAsset: {fileID: 0}
 --- !u!224 &275746629 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6230593750611290728, guid: aa3c8a958cc2d0f47b43587548a91da9, type: 3}
   m_PrefabInstance: {fileID: 265114967}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &275746630
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 275746628}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7568962705c53e04998c6fe0a8d3b9d3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  startPosition: {fileID: 904601064}
-  endPosition: {fileID: 1805691145}
-  fill: {fileID: 257451172}
 --- !u!1001 &304023894
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2278,6 +2266,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mainMenuLevel: MainMenu
+--- !u!4 &1112301585 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 9066669258792144865, guid: 295a369b9f9ad5843aa6926344f9257b, type: 3}
+  m_PrefabInstance: {fileID: 733211371}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &1159605082 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 87636402535111228, guid: eb66056a11716ca4e92da88a7eb88069, type: 3}

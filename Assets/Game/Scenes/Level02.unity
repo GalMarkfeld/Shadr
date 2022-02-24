@@ -369,7 +369,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &401244979
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1185,7 +1185,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &870297800
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2374,7 +2374,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1531889784
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3646,6 +3646,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 31443066}
     m_Modifications:
+    - target: {fileID: 1899761853179866949, guid: aa3c8a958cc2d0f47b43587548a91da9, type: 3}
+      propertyPath: endPosition
+      value: 
+      objectReference: {fileID: 733211372}
+    - target: {fileID: 1899761853179866949, guid: aa3c8a958cc2d0f47b43587548a91da9, type: 3}
+      propertyPath: startPosition
+      value: 
+      objectReference: {fileID: 1636539045}
     - target: {fileID: 6230593750569961472, guid: aa3c8a958cc2d0f47b43587548a91da9, type: 3}
       propertyPath: m_Color.b
       value: 0.60821235
@@ -3740,7 +3748,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6230593750611290728, guid: aa3c8a958cc2d0f47b43587548a91da9, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 177.1
+      value: 170
       objectReference: {fileID: 0}
     - target: {fileID: 6230593750611290728, guid: aa3c8a958cc2d0f47b43587548a91da9, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -3758,7 +3766,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: Progress Bar
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6230593750569961474, guid: aa3c8a958cc2d0f47b43587548a91da9, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: aa3c8a958cc2d0f47b43587548a91da9, type: 3}
 --- !u!224 &2058573936 stripped
 RectTransform:
