@@ -51,6 +51,7 @@ public class GameManager : MonoBehaviour
 
     void Awake()
     {
+        print("in game manager awake");
         #region Singleton
         if (inst == null)
         {
@@ -77,7 +78,7 @@ public class GameManager : MonoBehaviour
         //mainCanvasObj = GameObject.FindGameObjectsWithTag("main_canvas")[0];
         //Hide kill menu
 
-       // menusCanvas = GameObject.Find("Canvas-Menus");
+        // menusCanvas = GameObject.Find("Canvas-Menus");
 
         //menusCanvas.transform.position += new Vector3(0, 0, menuOffset);
         //ActivateMenu(false);
@@ -88,6 +89,11 @@ public class GameManager : MonoBehaviour
             print("setting dont destroy");
             DontDestroyOnLoad(respawn);
         }*/
+
+        QualitySettings.vSyncCount = 0;  // VSync must be disabled
+        Application.targetFrameRate = 60;
+
+
     }
 
     private void Update()
@@ -121,11 +127,14 @@ public class GameManager : MonoBehaviour
 
     private void killPlayer(bool isObstacle)
     {
-        /*
-        if (currentLevel == 6)
-        {
 
-            clearText(Notice);
+        if (currentLevel == 2)
+        {
+            obstacleWrongColorKill.gameObject.SetActive(false);
+            Notice.gameObject.SetActive(false);
+            restartText.gameObject.SetActive(false);
+        }
+            /*clearText(Notice);
           
             if (isObstacle)
             {
@@ -134,25 +143,11 @@ public class GameManager : MonoBehaviour
                 
             
             }
-            restartText.text = "PRESS ENTER TO RESTART!";
-  
-            
-        }
-        else
-        {*/
-            Time.timeScale = 0f;
-            theDeathScreen.gameObject.SetActive(true);
-            pauseButton.gameObject.SetActive(false);
+            restartText.text = "PRESS ENTER TO RESTART!";*/
+        Time.timeScale = 0f;
+        theDeathScreen.gameObject.SetActive(true);
+        pauseButton.gameObject.SetActive(false);
 
-            //SceneManager.LoadScene(0);
-            //We should add here code that will call the level selection menu
-            //mainCanvasObj.SetActive(false);
-            //menusCanvas.transform.position -= new Vector3(0, 0, menuOffset);
-            //killMenuObj.SetActive(true);
-            //ActivateMenu(true);
-        //}
-        
-        //call restart game
 
     }
 
@@ -168,6 +163,13 @@ public class GameManager : MonoBehaviour
 
     public void restartGame()
     {
+        if(currentLevel==2)
+        {
+            obstacleWrongColorKill.gameObject.SetActive(true);
+            Notice.gameObject.SetActive(true);
+            restartText.gameObject.SetActive(true);
+        }
+
         theDeathScreen.gameObject.SetActive(false);
         winScreen.gameObject.SetActive(false);
         Time.timeScale = 1f;
