@@ -13,6 +13,10 @@ public class PlayerController : MonoBehaviour
     private Animator _anim;
     [SerializeField] private ParticleSystem _ps_dust;
     [SerializeField] private ParticleSystem _ps_dust_WJ;
+    [SerializeField] private ParticleSystem _ps_start;
+    [SerializeField] private ParticleSystem _ps_finish;
+    [SerializeField] private TrailRenderer _tr_running;
+
 
     // Player-specific
     [SerializeField] private LayerMask groundLayerMask;
@@ -41,6 +45,8 @@ public class PlayerController : MonoBehaviour
     private int wallDir = 0; // 0 for no touch, +/- 1 for right/left wall touch
     private int wallDirPrev = 0;
 
+    private bool didStartParticles = false;
+
     //Timers
     private int jinputCounter = 0;
     private int jumpBufferTime = 6;     // how long before a jump input exists
@@ -55,6 +61,7 @@ public class PlayerController : MonoBehaviour
     //Color[] colors = { Color.black, Color.red };
     [SerializeField] private SpriteRenderer renderer;
     private Transform spriteAnchor;
+    private float trailStartAlpha = 0.6;
 
     int currentColor;
     //gal edit:
@@ -107,6 +114,12 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
+        if (!didStartParticles)
+        {
+            playParticle(_ps_start);
+            didStartParticles = true;
+        }
+
         // Begin each frame by getting inputs and carrying over relevant velocities and visual data
         bool jinput =       Input.GetKeyDown(KeyCode.Space);
         bool jinputHold =   Input.GetKey(KeyCode.Space);
@@ -352,12 +365,20 @@ public class PlayerController : MonoBehaviour
 
         // reset color
         currentColor = 0;
-        renderer.material.color = colors[currentColor];
+        Color c = colors[currentColor];
+        renderer.material.color = c;
+        Color colAdj = c;
+        colAdj.a = trailStartAlpha;
+        _tr_running.startColor = colAdj;
+
+        didStartParticles = false;
+
 
         // initialize heading
         hinput = startFacingLeft ? -1f : 1f;
         setScale(new Vector3(1f, 1f, 1f));
         updateHeading();
+
 
         print("Performed restart!");
     }
@@ -368,7 +389,11 @@ public class PlayerController : MonoBehaviour
     {
         currentColor = (currentColor + 1) % colors.Length;
 
-        renderer.material.color = colors[currentColor];
+        Color col = colors[currentColor];
+        renderer.material.color = col;
+        Color colAdj = col;
+        colAdj.a = trailStartAlpha;
+        _tr_running.startColor = colAdj;
     }
 
 
@@ -443,6 +468,8 @@ public class PlayerController : MonoBehaviour
                     Debug.Log("inside player controller");
                     OnLevelWin?.Invoke();
                     GlobalVar.isDead = true;
+
+                    playParticle(_ps_finish);
                 }
                 break;
 
@@ -479,7 +506,10 @@ public class PlayerController : MonoBehaviour
         _ps_dust_WJ.Play();
     }
 
-
+    private void playParticle(ParticleSystem ps)
+    {
+        ps.Play();
+    }
 
     // for testing purposes, shows hitboxes
     void OnDrawGizmos()
