@@ -121,8 +121,7 @@ public class GameManager : MonoBehaviour
 
     private void killPlayer(bool isObstacle)
     {
-
-
+        /*
         if (currentLevel == 6)
         {
 
@@ -140,7 +139,7 @@ public class GameManager : MonoBehaviour
             
         }
         else
-        {
+        {*/
             Time.timeScale = 0f;
             theDeathScreen.gameObject.SetActive(true);
             pauseButton.gameObject.SetActive(false);
@@ -151,7 +150,7 @@ public class GameManager : MonoBehaviour
             //menusCanvas.transform.position -= new Vector3(0, 0, menuOffset);
             //killMenuObj.SetActive(true);
             //ActivateMenu(true);
-        }
+        //}
         
         //call restart game
 
@@ -160,19 +159,10 @@ public class GameManager : MonoBehaviour
 
     private void playerWon()
     {
-        Debug.Log("player won");
-        //obstacleWrongColorKill.text = "You Won!";
         winScreen.gameObject.SetActive(true);
         pauseButton.SetActive(false);
 
-        if (currentLevel == 6)
-        {
-            //GameConfig.cameraSpeed = 0;
-
-            //obstacleWrongColorKill.text = "You Won!";
-            clearText(Notice);
-
-        }
+        clearText(Notice);
     }
     
 
