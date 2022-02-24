@@ -6,9 +6,12 @@ using UnityEngine.SceneManagement;
 public class PauseMenu : MonoBehaviour
 {
 
-    [SerializeField]
-    GameObject pauseMenu;
-    public int current;
+
+    [SerializeField] GameObject pauseMenu;
+    [SerializeField] GameObject pauseButton;
+    [SerializeField] public int current;
+
+    public static System.Action onLevelRestart = delegate { };
 
     private void Awake()
     {
@@ -19,12 +22,14 @@ public class PauseMenu : MonoBehaviour
     public void Pause()
     {
         pauseMenu.SetActive(true);
+        pauseButton.SetActive(false);   // turn off the button while in the pause menu
         Time.timeScale = 0f;
     }
 
     public void Resume()
     {
         pauseMenu.SetActive(false);
+        pauseButton.SetActive(true);
         Time.timeScale = 1f;
     }
 
@@ -36,8 +41,8 @@ public class PauseMenu : MonoBehaviour
 
     public void restart()
     {
-        Time.timeScale = 1f;    
-        SceneManager.LoadScene(current);
+        FindObjectOfType<GameManager>().restartGame();
+        pauseMenu.SetActive(false);
     }
 
     public void levelSelect()

@@ -37,6 +37,7 @@ public class GameManager : MonoBehaviour
 
     [Space]
     public DeathMenu theDeathScreen;
+    public WinMenu winScreen;
     public GameObject pauseButton;
     //public UnityEvent LevelFinishedEvent;
 
@@ -122,29 +123,6 @@ public class GameManager : MonoBehaviour
         restartGame();
     }
 
-    /*private void OnDestroy()
-    {
-        print("on destroy scene");
-        //killMenuObj.SetActive(true);
-        mainCanvasObj.SetActive(true);
-    }*/
-
-    GameObject FindInActiveObjectByTag(string tag)
-    {
-
-        Transform[] objs = Resources.FindObjectsOfTypeAll<Transform>() as Transform[];
-        for (int i = 0; i < objs.Length; i++)
-        {
-            if (objs[i].hideFlags == HideFlags.None)
-            {
-                if (objs[i].CompareTag(tag))
-                {
-                    return objs[i].gameObject;
-                }
-            }
-        }
-        return null;
-    }
 
     private void killPlayer(bool isObstacle)
     {
@@ -155,19 +133,7 @@ public class GameManager : MonoBehaviour
 
             clearText(Notice);
           
-
-
-            //GameConfig.cameraSpeed = 0;
-
             if (isObstacle)
-            /*
-            if (!avoidTextPrompts)
-            {
-                clearText(obstacleWrongColorKill);
-                clearText(restartText);
-
-            }
-            */
             {
 
                 obstacleWrongColorKill.text = "SWITCH TO THE SAME COLOR!";
@@ -175,22 +141,7 @@ public class GameManager : MonoBehaviour
             
             }
             restartText.text = "PRESS ENTER TO RESTART!";
-
-
-
-
-            //float timeToWait = 0.5f;
-            //float done = 0.0f;
-
-            //while(Time.time > done)
-            //{
-            //    done = Time.time + timeToWait;
-
-            //}
-
-
-
-            
+  
             
         }
         else
@@ -211,24 +162,14 @@ public class GameManager : MonoBehaviour
 
     }
 
-    //IEnumerator Reset(float Count)
-    //{
-    //    yield return new WaitForSeconds(Count); //Count is the amount of time in seconds that you want to wait.
-    //                                            //And here goes your method of resetting the game...
-    //    yield return restartGame();
-    //}    //IEnumerator Reset(float Count)
-    //{
-    //    yield return new WaitForSeconds(Count); //Count is the amount of time in seconds that you want to wait.
-    //                                            //And here goes your method of resetting the game...
-    //    yield return restartGame();
-    //}
-
-
 
     private void playerWon()
     {
         Debug.Log("player won");
-        obstacleWrongColorKill.text = "You Won!";
+        //obstacleWrongColorKill.text = "You Won!";
+        winScreen.gameObject.SetActive(true);
+        pauseButton.SetActive(false);
+
         if (currentLevel == 6)
         {
             //GameConfig.cameraSpeed = 0;
@@ -238,17 +179,12 @@ public class GameManager : MonoBehaviour
 
         }
     }
-
-    //IEnumerator _wait(float time, Action callback)
-    //{
-    //    yield return new WaitForSeconds(time);
-    //    callback();
-    //}
-
+    
 
     public void restartGame()
     {
         theDeathScreen.gameObject.SetActive(false);
+        winScreen.gameObject.SetActive(false);
         Time.timeScale = 1f;
 
         GameObject player = GameObject.Find("Player");
@@ -260,7 +196,9 @@ public class GameManager : MonoBehaviour
         clearText(obstacleWrongColorKill);
         clearText(restartText);
 
-        onLevelRestart?.Invoke();
+        onLevelRestart?.Invoke();       // do Player's specific restart 
+
+        pauseButton.SetActive(true);    // do Pause button's specific restart
 
     }
 
@@ -272,12 +210,6 @@ public class GameManager : MonoBehaviour
 
     public void restartLevel()
     {
-        /*if(_currentLevel)
-            Destroy(_currentLevel.gameObject);
-
-        _currentLevel = Instantiate(levels[0]).GetComponent<Level>();*/
-        //killMenuObj.SetActive(false);
-        //ActivateMenu(false);
 
         restartGame();
 
@@ -300,92 +232,4 @@ public class GameManager : MonoBehaviour
         restartText.gameObject.SetActive(false);
     }
 
-    //////////private void Awake()
-    //////////{
-    //////////    #region Singleton
-    //////////    if (inst == null)
-    //////////    {
-    //////////        inst = this;
-    //////////    }
-    //////////    else
-    //////////    {
-    //////////        Debug.LogWarning("More then one GameManger was created");
-    //////////        Destroy(gameObject);
-    //////////    }
-    //////////    #endregion
-
-    //////////   //sign to events
-
-
-    //////////}
-
-    //private void Start()
-    //{
-
-    //}
-
-    //private void AddScore(Transform transform)
-    //{
-    //    _score++;
-
-    //    if (_score > _highScore)
-    //        _highScore = _score;
-
-    //    UpdateScoreText();
-    //}
-
-    //private void UpdateScoreText()
-    //{
-    //    scoreText.text = _score.ToString();
-    //    highScoreText.text = _highScore.ToString();
-    //}
-
-    //private void LevelFail()
-    //{
-    //    _score = 0;
-    //    UpdateScoreText();
-
-    //    Invoke(nameof(MovePlayerWhenKilled), 0.02f);
-    //    Invoke(nameof(RestartGame), 1f);
-    //}
-
-    //private void LevelFinifhed()
-    //{
-    //    LevelFinishedEvent.Invoke();
-    //    _level++;
-
-    //    if (_level >= levels.Count)
-    //        _level = 0;
-
-    //    Invoke(nameof(StartLevel), 1f);
-    //}
-
-    //private void MovePlayerWhenKilled()
-    //{
-    //    ball.position = Vector3.up * 200f;
-    //}
-
-    //private void StartLevel()
-    //{
-    //    if (_currentLevel)
-    //        Destroy(_currentLevel.gameObject);
-
-    //    _currentLevel = Instantiate(levels[_level], helix).GetComponent<Level>();
-    //    ball.position = startPos.position;
-    //    OnLevelStart.Invoke(_currentLevel);
-    //}
-
-    //public void RestartGame()
-    //{
-    //    if(_currentLevel)
-    //        Destroy(_currentLevel.gameObject);
-
-    //    _currentLevel = Instantiate(levels[0], helix).GetComponent<Level>();
-
-    //    ball.position = startPos.position;
-    //    helix.rotation = Quaternion.identity;
-
-    //    _score = 0;
-    //    UpdateScoreText();
-    //}
 }
