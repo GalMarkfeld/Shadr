@@ -111,19 +111,18 @@ public class GameManager : MonoBehaviour
     //Gal edit
     private void setNotice(String text)
     {
-        
-        Debug.Log("In set notice");
-        Notice.text = text;
-        
-
-        // Roey updated
-        if (avoidTextPrompts)
+        if(Notice)
         {
-            Debug.Log("Roey update - ignoring text in non-tutorial level!");
-            clearText(Notice);
-            disableText();
+            Notice.text = text;
+            // Roey updated
+            if (avoidTextPrompts)
+            {
+                Debug.Log("Roey update - ignoring text in non-tutorial level!");
+                clearText(Notice);
+                disableText();
 
-        }
+            }
+        }     
     }
 
     private void Start()
@@ -135,7 +134,7 @@ public class GameManager : MonoBehaviour
     private void killPlayer(bool isObstacle)
     {
 
-        if (currentLevel == 2)
+        if (currentLevel == 2 && obstacleWrongColorKill)
         {
             obstacleWrongColorKill.gameObject.SetActive(false);
             Notice.gameObject.SetActive(false);
@@ -195,7 +194,7 @@ public class GameManager : MonoBehaviour
 
     public void restartGame()
     {
-        if(currentLevel==2)
+        if(currentLevel==2 && obstacleWrongColorKill)
         {
             obstacleWrongColorKill.gameObject.SetActive(true);
             Notice.gameObject.SetActive(true);
