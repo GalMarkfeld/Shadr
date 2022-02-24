@@ -8,11 +8,6 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    public GameObject menusCanvas;
-    public int menuOffset = 420;
-    //[SerializeField]
-    public GameObject killMenuObj;
-    //public GameObject mainCanvasObj;
 
     public GameObject[] respawns;
     public static GameManager inst;
