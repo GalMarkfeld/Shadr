@@ -660,7 +660,7 @@ GameObject:
   - component: {fileID: 283737503}
   m_Layer: 5
   m_Name: DeathMenu
-  m_TagString: Untagged
+  m_TagString: kill_menu
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3559,7 +3559,7 @@ GameObject:
   - component: {fileID: 1397056373}
   m_Layer: 5
   m_Name: WinMenu
-  m_TagString: Untagged
+  m_TagString: win_menu
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6908,14 +6908,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   respawns: []
+  theDeathScreen: {fileID: 0}
+  winScreen: {fileID: 0}
+  pauseButton: {fileID: 7664791842255940566}
   obstacleWrongColorKill: {fileID: 632468362}
   Notice: {fileID: 2013807330}
   restartText: {fileID: 1500869572}
   avoidTextPrompts: 1
   currentLevel: 5
-  theDeathScreen: {fileID: 283737503}
-  winScreen: {fileID: 1397056373}
-  pauseButton: {fileID: 7664791842255940566}
   startPosition: {fileID: 0}
 --- !u!1 &6628699712084503471
 GameObject:
@@ -7197,7 +7197,7 @@ GameObject:
   - component: {fileID: 711762955976492720}
   m_Layer: 5
   m_Name: LevelPauseButton
-  m_TagString: Untagged
+  m_TagString: pause_button
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

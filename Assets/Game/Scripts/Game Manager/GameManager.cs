@@ -11,7 +11,10 @@ public class GameManager : MonoBehaviour
 
     public GameObject[] respawns;
     public static GameManager inst;
-    
+    public GameObject theDeathScreen;
+    public GameObject winScreen;
+    public GameObject pauseButton;
+
     //public RunnerGameConfig gameConfig;
     //public Transform startPos;
 
@@ -30,10 +33,7 @@ public class GameManager : MonoBehaviour
     public int currentLevel = 0;
     //public List<Level> levels = new List<Level>();
 
-    [Space]
-    public DeathMenu theDeathScreen;
-    public WinMenu winScreen;
-    public GameObject pauseButton;
+    //[Space]
     //public UnityEvent LevelFinishedEvent;
 
     //public static Action<Level> OnLevelStart = delegate { };
@@ -93,7 +93,14 @@ public class GameManager : MonoBehaviour
         QualitySettings.vSyncCount = 0;  // VSync must be disabled
         Application.targetFrameRate = 60;
 
+        theDeathScreen = GameObject.FindGameObjectsWithTag("kill_menu")[0];
+        winScreen = GameObject.FindGameObjectsWithTag("win_menu")[0];
+        pauseButton = GameObject.FindGameObjectsWithTag("pause_button")[0];
 
+        print(theDeathScreen);
+        print(winScreen);
+        winScreen.gameObject.SetActive(false);
+        theDeathScreen.gameObject.SetActive(false);
     }
 
     private void Update()
@@ -134,28 +141,53 @@ public class GameManager : MonoBehaviour
             Notice.gameObject.SetActive(false);
             restartText.gameObject.SetActive(false);
         }
-            /*clearText(Notice);
-          
-            if (isObstacle)
-            {
+        /*clearText(Notice);
 
-                obstacleWrongColorKill.text = "SWITCH TO THE SAME COLOR!";
-                
-            
-            }
-            restartText.text = "PRESS ENTER TO RESTART!";*/
-        Time.timeScale = 0f;
-        theDeathScreen.gameObject.SetActive(true);
-        pauseButton.gameObject.SetActive(false);
+        if (isObstacle)
+        {
 
+            obstacleWrongColorKill.text = "SWITCH TO THE SAME COLOR!";
+
+
+        }
+        restartText.text = "PRESS ENTER TO RESTART!";*/
+        if (theDeathScreen == null)
+        {
+            restartGame();
+        }
+        else
+        {
+            Time.timeScale = 0f;
+            theDeathScreen.gameObject.SetActive(true);
+            pauseButton.gameObject.SetActive(false);
+        }
 
     }
 
 
     private void playerWon()
     {
-        winScreen.gameObject.SetActive(true);
-        pauseButton.SetActive(false);
+        print(this);
+        try
+        {
+            winScreen.gameObject.SetActive(true);
+            pauseButton.SetActive(false);
+        }
+        catch
+        {
+            return;
+            //SceneManager.LoadScene(1);
+        }
+        /*if (winScreen == null)
+        {
+            SceneManager.LoadScene(1);
+        }
+        else
+        {
+            winScreen.gameObject.SetActive(true);
+            pauseButton.SetActive(false);
+        }*/
+
 
         clearText(Notice);
     }
@@ -170,9 +202,13 @@ public class GameManager : MonoBehaviour
             restartText.gameObject.SetActive(true);
         }
 
-        theDeathScreen.gameObject.SetActive(false);
-        winScreen.gameObject.SetActive(false);
-        Time.timeScale = 1f;
+        if(theDeathScreen != null)
+        {
+            theDeathScreen.gameObject.SetActive(false);
+            winScreen.gameObject.SetActive(false);
+            pauseButton.SetActive(true);    // do Pause button's specific restart
+            Time.timeScale = 1f;
+        }
 
         GameObject player = GameObject.Find("Player");
         GameObject levelStart = GameObject.Find("PlayerSpawn");
@@ -184,9 +220,6 @@ public class GameManager : MonoBehaviour
         clearText(restartText);
 
         onLevelRestart?.Invoke();       // do Player's specific restart 
-
-        pauseButton.SetActive(true);    // do Pause button's specific restart
-
     }
 
 

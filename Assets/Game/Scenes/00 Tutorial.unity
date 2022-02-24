@@ -1143,6 +1143,10 @@ PrefabInstance:
       propertyPath: pauseButton
       value: 
       objectReference: {fileID: 532394960}
+    - target: {fileID: 7664791842283396417, guid: 7fb4082cbfd649b499b5edea3b21995e, type: 3}
+      propertyPath: m_TagString
+      value: pause_button
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7fb4082cbfd649b499b5edea3b21995e, type: 3}
 --- !u!1 &503117779
@@ -1584,11 +1588,11 @@ GameObject:
   - component: {fileID: 777622205}
   m_Layer: 5
   m_Name: WinMenu
-  m_TagString: Untagged
+  m_TagString: win_menu
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &777622204
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2056,7 +2060,7 @@ GameObject:
   - component: {fileID: 1056660197}
   m_Layer: 5
   m_Name: DeathMenu
-  m_TagString: Untagged
+  m_TagString: kill_menu
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

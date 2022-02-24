@@ -21,6 +21,8 @@ TagManager:
   - speed_boost
   - kill_menu
   - main_canvas
+  - pause_button
+  - win_menu
   layers:
   - Default
   - TransparentFX

@@ -438,10 +438,12 @@ public class PlayerController : MonoBehaviour
                 break;
 
             case "End":
-                Debug.Log("inside player controller");
-                OnLevelWin?.Invoke();
-                GlobalVar.isDead = true;
-
+                if (!GlobalVar.isDead)
+                {
+                    Debug.Log("inside player controller");
+                    OnLevelWin?.Invoke();
+                    GlobalVar.isDead = true;
+                }
                 break;
 
             case "laser":        
