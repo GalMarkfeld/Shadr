@@ -21,6 +21,7 @@ public class ProgressBar : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        print(startPosition);
         scaleAmount = (startPosition.position.x - startX) / total;
         fill.localScale = new Vector3(scaleAmount, 1, 1);
         

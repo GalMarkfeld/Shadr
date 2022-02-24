@@ -12,6 +12,8 @@ using UnityEngine.SceneManagement;
 public class WinMenu : MonoBehaviour
 {
 
+    public int currentLevel;
+
     public void quitToMain()
     {
         SceneManager.LoadScene(0);
@@ -25,9 +27,11 @@ public class WinMenu : MonoBehaviour
 
     public void goToNext()
     {
-        int adjustedInd = SceneManager.GetActiveScene().buildIndex + 1;
-        if (adjustedInd > SceneManager.sceneCount) adjustedInd = 1;     // return to level select if they try going to an out of bounds level
-        SceneManager.LoadScene(adjustedInd);
+        if(currentLevel==7)
+        {
+            SceneManager.LoadScene(0);
+        }
+        SceneManager.LoadScene(currentLevel+1);
     }
 
 }

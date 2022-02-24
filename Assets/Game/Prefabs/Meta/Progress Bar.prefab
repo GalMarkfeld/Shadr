@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 6230593750569961486}
   - component: {fileID: 6230593750569961475}
   - component: {fileID: 6230593750569961472}
-  - component: {fileID: 6230593750569961474}
   m_Layer: 5
   m_Name: Fill
   m_TagString: Untagged
@@ -77,21 +76,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &6230593750569961474
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6230593750569961487}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7568962705c53e04998c6fe0a8d3b9d3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  startPosition: {fileID: 0}
-  endPosition: {fileID: 0}
-  fill: {fileID: 6230593750569961486}
 --- !u!1 &6230593750611290729
 GameObject:
   m_ObjectHideFlags: 0
@@ -103,6 +87,7 @@ GameObject:
   - component: {fileID: 6230593750611290728}
   - component: {fileID: 6230593750611290730}
   - component: {fileID: 6230593750611290731}
+  - component: {fileID: 1899761853179866949}
   m_Layer: 5
   m_Name: Progress Bar
   m_TagString: Untagged
@@ -169,3 +154,18 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &1899761853179866949
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6230593750611290729}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7568962705c53e04998c6fe0a8d3b9d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startPosition: {fileID: 0}
+  endPosition: {fileID: 0}
+  fill: {fileID: 6230593750569961486}
